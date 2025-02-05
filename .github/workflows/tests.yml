@@ -22,11 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Aspell
-        shell: bash
-        run: |
-          sudo apt-get update && sudo apt-get install -y aspell aspell-en
-
       - name: Cache Dependencies PHP
         id: php-cache
         uses: actions/cache@v4
