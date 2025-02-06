@@ -8,6 +8,28 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+it('should return the query builder with the correct columns', function (): void {
+    $query = new IndexQuery();
+    $builder = $query->builder();
+    expect($builder->getQuery()->columns)->toBe(['id', 'name', 'slug']);
+});
+
+it('should eager load subcategories with the correct columns', function (): void {
+    // Arrange: Create a parent category
+    $category = Category::factory()->create();
+
+    // Arrange: Create subcategories for the parent category
+    Category::factory()->count(2)->create(['parent_id' => $category->id]);
+
+    // Act: Get the parent category with its subcategories
+    $category = (new IndexQuery())->builder()->first();
+
+    // Assert: Check if the subcategories are loaded with the correct columns
+    $category->subcategories->each(function (Category $subcategory): void {
+        expect($subcategory->getAttributes())->toHaveKeys(['id', 'name', 'slug', 'parent_id', 'image_url']);
+    });
+});
+
 it('returns the correct subcategories for the parent category', function (): void {
     // Arrange: Create a parent category
     $category = Category::factory()->create();
@@ -59,6 +81,65 @@ it('limits the number of subcategories', function (int $count): void {
     // Assert: Check if the number of subcategories is correct
     $this->assertCount($expectedCount, $category['subcategories']);
 })->with([2, 5, 10]);
+
+it(
+    'returns list of categories ordered by display_order asc then by name asc',
+    function (array $data, array $order): void {
+        // Arrange: Create categories with different display_order and views
+        foreach ($data as $item) {
+            $categories[] = Category::factory()->create($item);
+        }
+
+        // Act: Get the categories
+        $dbCategories = (new IndexQuery())->builder()->get();
+
+        // Assert: Check if the categories are ordered correctly
+        foreach ($order as $key => $value) {
+            $this->assertEquals($dbCategories[$key]->slug, $categories[$value]->slug);
+        }
+    }
+)->with([
+    [
+        'data' => [
+            ['name' => 'Category A', 'display_order' => 0],
+            ['name' => 'Category B', 'display_order' => 0],
+            ['name' => 'Category C', 'display_order' => 0],
+            ['name' => 'Category D', 'display_order' => 0],
+            ['name' => 'Category E', 'display_order' => 0],
+        ],
+        'order' => [0, 1, 2, 3, 4],
+    ],
+    [
+        'data' => [
+            ['name' => 'Category B', 'display_order' => 0], // 0
+            ['name' => 'Category A', 'display_order' => 0], // 1
+            ['name' => 'Category C', 'display_order' => 0], // 2
+            ['name' => 'Category E', 'display_order' => 0], // 3
+            ['name' => 'Category D', 'display_order' => 0], // 4
+        ],
+        'order' => [1, 0, 2, 4, 3],
+    ],
+    [
+        'data' => [
+            ['name' => 'Category A', 'display_order' => 1], // 0
+            ['name' => 'Category B', 'display_order' => 0], // 1
+            ['name' => 'Category C', 'display_order' => 1], // 2
+            ['name' => 'Category D', 'display_order' => 0], // 3
+            ['name' => 'Category E', 'display_order' => 1], // 4
+        ],
+        'order' => [1, 3, 0, 2, 4],
+    ],
+    [
+        'data' => [
+            ['name' => 'Category A', 'display_order' => 5], // 0
+            ['name' => 'Category B', 'display_order' => 3], // 1
+            ['name' => 'Category C', 'display_order' => 4], // 2
+            ['name' => 'Category D', 'display_order' => 1], // 3
+            ['name' => 'Category E', 'display_order' => 0], // 4
+        ],
+        'order' => [4, 3, 1, 2, 0],
+    ],
+]);
 
 it('orders subcategories by views desc then display_order desc', function (array $order, array $data): void {
     // Arrange: Create a parent category
@@ -119,14 +200,3 @@ it('orders subcategories by views desc then display_order desc', function (array
         ],
     ],
 ]);
-
-it('returns list of parent categories ordered by views desc then display_order asc', function (): void {
-    // Arrange: Create parent categories with different display_order and views
-    $categories = Category::factory()->count(5)->create();
-
-    // Act: Get the parent categories
-    $dbCategories = (new IndexQuery())->builder()->get();
-
-    // Assert: Check if the parent categories are ordered correctly
-    $this->assertEquals($dbCategories->pluck('slug')->toArray(), $categories->sortByDesc('views')->sortBy('display_order')->pluck('slug')->toArray());
-})->todo();

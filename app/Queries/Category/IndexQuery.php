@@ -25,8 +25,8 @@ final readonly class IndexQuery
         return Category::query()
             ->select(['id', 'name', 'slug'])
             ->whereNull(columns: 'parent_id')
-            ->orderBy(column: 'views', direction: 'desc')
             ->orderBy(column: 'display_order')
+            ->orderBy(column: 'name')
             ->with([
                 'subcategories' => function (Relation $query): void {
                     $query->select(['id', 'name', 'slug', 'parent_id', 'image_url'])
