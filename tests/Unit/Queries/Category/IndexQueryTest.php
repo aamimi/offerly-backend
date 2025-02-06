@@ -12,7 +12,7 @@ it('returns the correct subcategories for the parent category', function (): voi
     // Arrange: Create a parent category
     $category = Category::factory()->create();
 
-    // Arrange: Create 5 subcategories for the parent category
+    // Arrange: Create subcategories for the parent category
     $subcategories = Category::factory()->count(2)->create(['parent_id' => $category->id]);
 
     // Act: Get the first parent category with its subcategories
@@ -43,7 +43,7 @@ it('returns the correct response structure for the parent category with subcateg
         ->and($category['subcategories'])->each->toHaveKeys(['id', 'name', 'slug', 'image_url']);
 });
 
-it('limits the number of subcategories to 5', function (int $count): void {
+it('limits the number of subcategories', function (int $count): void {
     // Arrange: Create a parent category
     $category = Category::factory()->create();
 
@@ -54,7 +54,7 @@ it('limits the number of subcategories to 5', function (int $count): void {
     $category = (new IndexQuery())->builder()->first()->toArray();
 
     // Arrange: Calculate the expected number of subcategories
-    $expectedCount = min($count, 5);
+    $expectedCount = min($count, IndexQuery::LIMIT);
 
     // Assert: Check if the number of subcategories is correct
     $this->assertCount($expectedCount, $category['subcategories']);

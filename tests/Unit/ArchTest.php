@@ -85,3 +85,7 @@ arch('actions')
 arch('services')
     ->expect('App\Services')
     ->toHaveMethod('handle');
+
+arch('queries')
+    ->expect('App\Queries')
+    ->toHaveMethod('builder');

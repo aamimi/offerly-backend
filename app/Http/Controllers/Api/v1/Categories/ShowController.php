@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\v1\Categories;
 
-use App\Models\Category;
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\Category\IndexResource;
+use App\Queries\Category\ShowQuery;
 
 final readonly class ShowController
 {
     /**
+     * ShowController constructor
+     */
+    public function __construct(private ShowQuery $query) {}
+
+    /**
      * Display the specified category.
      */
-    public function __invoke(string $slug): JsonResponse
+    public function __invoke(string $slug): IndexResource
     {
-        $category = Category::query()->where(column: 'slug', operator: '=', value: $slug)->firstOrFail();
-
-        return response()->json($category);
+        return new IndexResource($this->query->builder($slug)->firstOrFail());
     }
 }
