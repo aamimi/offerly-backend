@@ -22,6 +22,8 @@ arch('avoid mutation')
         'App\Models',
         'App\Providers',
         'App\Services',
+        'App\Http\Requests',
+        'App\Http\Resources',
     ]);
 
 arch('avoid inheritance')
@@ -34,6 +36,8 @@ arch('avoid inheritance')
         'App\Jobs',
         'App\Providers',
         'App\Services',
+        'App\Http\Requests',
+        'App\Http\Resources',
     ]);
 
 arch('annotations')
@@ -70,6 +74,8 @@ arch('models')
         'App\Services',
         'Database\Factories',
         'Database\Seeders',
+        'App\Policies',
+        'App\Queries',
     ]);
 
 arch('actions')

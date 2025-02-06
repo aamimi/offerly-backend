@@ -21,7 +21,7 @@ return RectorConfig::configure()
         codingStyle: true,
         typeDeclarations: true,
         privatization: true,
-        naming: true,
+        naming: false,
         earlyReturn: true,
         strictBooleans: true,
         rectorPreset: true,
