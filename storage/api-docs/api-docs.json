@@ -1,0 +1,84 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/categories": {
+            "get": {
+                "tags": ["Categories"],
+                "summary": "Get categories with subcategories",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Category"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Subcategory": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 62
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Glennie Barrows"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "glennie-barrows"
+                    },
+                    "image": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": null
+                    }
+                }
+            },
+            "Category": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 53
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Dominic Mayer"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "dominic-mayer"
+                    },
+                    "subcategories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Subcategory"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

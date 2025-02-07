@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "ext-pdo": "*",
+        "darkaonline/l5-swagger": "^8.6",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9"
     },
