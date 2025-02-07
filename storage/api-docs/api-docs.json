@@ -30,6 +30,34 @@
                     }
                 }
             }
+        },
+        "/api/v1/categories/{slug}": {
+            "get": {
+                "tags": ["Categories"],
+                "summary": "Get category with subcategories by slug",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
