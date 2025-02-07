@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Config;
 
 /**
  * @property-read int $id
@@ -47,5 +48,13 @@ final class Category extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(related: self::class, foreignKey: 'parent_id');
+    }
+
+    /**
+     * Get the image URL for the category.
+     */
+    public function getImageUrl(): string
+    {
+        return $this->image_url ?? asset(Config::string('app.default_images.category'));
     }
 }

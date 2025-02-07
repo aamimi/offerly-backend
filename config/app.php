@@ -125,4 +125,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'default_images' => [
+        'category' => 'images/default-category.svg',
+    ],
 ];

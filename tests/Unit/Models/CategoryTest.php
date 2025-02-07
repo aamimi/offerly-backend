@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Config;
 
 test('to array', function (): void {
     $user = Category::factory()->create()->refresh();
@@ -37,3 +38,11 @@ it('has many subcategories', function (): void {
         expect($subcategories->contains($subcategory))->toBeTrue();
     });
 });
+
+it('returns the correct image URL', function (): void {
+    $catWithImage = Category::factory()->create(['image_url' => 'http://example.com/image.jpg']);
+    expect($catWithImage->getImageUrl())->toBe('http://example.com/image.jpg');
+
+    $catWithoutImage = Category::factory()->create(['image_url' => null]);
+    expect($catWithoutImage->getImageUrl())->toBe(asset(Config::string('app.default_images.category')));
+})->note('This test is incomplete check if using s3.');
