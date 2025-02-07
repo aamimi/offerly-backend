@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources\Category;
+namespace App\Http\Resources\v1\Category;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

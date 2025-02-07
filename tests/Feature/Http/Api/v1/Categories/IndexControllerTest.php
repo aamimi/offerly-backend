@@ -33,9 +33,6 @@ it('can list only parent categories', function (): void {
 });
 
 it('returns the correct response structure for the list of categories', function (): void {
-    // Arrange: Create a parent category
-    Category::factory()->create();
-
     // Act: Send a GET request to the index endpoint
     $response = $this->getJson('/api/v1/categories');
 
@@ -57,4 +54,7 @@ it('returns the correct response structure for the list of categories', function
             ],
         ],
     ]);
-});
+})->with([
+    fn () => Category::factory()->create(),
+    fn () => Category::factory()->has(Category::factory()->count(2), 'subcategories')->create(),
+]);

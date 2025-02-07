@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\v1\Categories;
 
-use App\Http\Resources\Category\IndexResource;
+use App\Http\Resources\v1\Category\IndexResource;
 use App\Queries\Category\ShowQuery;
 
 final readonly class ShowController

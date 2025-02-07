@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\v1\Categories;
 
-use App\Http\Resources\Category\IndexCollection;
+use App\Http\Resources\v1\Category\IndexCollection;
 use App\Queries\Category\IndexQuery;
 
 final readonly class IndexController

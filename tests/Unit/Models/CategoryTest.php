@@ -22,10 +22,11 @@ test('to array', function (): void {
 });
 
 it('belongs to parent', function (): void {
-    $category = Category::factory()->create();
     $parent = Category::factory()->create();
-    $category->parent()->associate($parent)->save();
-    expect($category->parent->is($parent))->toBeTrue();
+    $subcategory = Category::factory()->create();
+    $subcategory->parent()->associate($parent)->save();
+    expect($subcategory->parent)->toBeInstanceOf(Category::class)
+        ->and($subcategory->parent->is($parent))->toBeTrue();
 });
 
 it('has many subcategories', function (): void {
