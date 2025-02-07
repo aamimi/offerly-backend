@@ -5,6 +5,11 @@ declare(strict_types=1);
 use App\Models\Category;
 use Illuminate\Support\Facades\Config;
 
+it('has a factory', function (): void {
+    $category = Category::factory()->create();
+    expect($category->id)->toBe(1);
+});
+
 test('to array', function (): void {
     $user = Category::factory()->create()->refresh();
     expect(array_keys($user->toArray()))->toEqual([
@@ -46,3 +51,11 @@ it('returns the correct image URL', function (): void {
     $catWithoutImage = Category::factory()->create(['image_url' => null]);
     expect($catWithoutImage->getImageUrl())->toBe(asset(Config::string('app.default_images.category')));
 })->note('This test is incomplete check if using s3.');
+
+it('returns the correct meta title', function (): void {
+    $category = Category::factory()->create(['meta_title' => 'Meta Title']);
+    expect($category->getMetaTitle())->toBe('Meta Title');
+
+    $category = Category::factory()->create(['meta_title' => null, 'name' => 'Category Name']);
+    expect($category->getMetaTitle())->toBe('Category Name');
+});

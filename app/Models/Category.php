@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Config;
  * @property-read int $id
  * @property string $name
  * @property string $slug
- * @property string $image_url
- * @property string $meta_title
- * @property string $meta_description
+ * @property string|null $image_url
+ * @property string|null $meta_title
+ * @property string|null $meta_description
  * @property int $display_order
  * @property int $views
  * @property int|null $parent_id
@@ -56,5 +56,13 @@ final class Category extends Model
     public function getImageUrl(): string
     {
         return $this->image_url ?? asset(Config::string('app.default_images.category'));
+    }
+
+    /**
+     * Get the meta title for the category.
+     */
+    public function getMetaTitle(): string
+    {
+        return $this->meta_title ?? $this->name;
     }
 }

@@ -51,7 +51,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Category"
+                                    "$ref": "#/components/schemas/CategoryDetails"
                                 }
                             }
                         }
@@ -98,6 +98,38 @@
                     "slug": {
                         "type": "string",
                         "example": "dominic-mayer"
+                    },
+                    "subcategories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Subcategory"
+                        }
+                    }
+                }
+            },
+            "CategoryDetails": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 53
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Dominic Mayer"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "dominic-mayer"
+                    },
+                    "meta_title": {
+                        "type": "string",
+                        "example": "Dominic Mayer"
+                    },
+                    "meta_description": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Dominic Mayer"
                     },
                     "subcategories": {
                         "type": "array",

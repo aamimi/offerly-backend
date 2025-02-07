@@ -18,7 +18,7 @@ it('should return the query builder', function (): void {
 it('should return the query builder with the correct columns', function (): void {
     $query = new ShowQuery();
     $builder = $query->builder('category-slug');
-    expect($builder->getQuery()->columns)->toBe(['id', 'name', 'slug']);
+    expect($builder->getQuery()->columns)->toBe(['id', 'name', 'slug', 'meta_title', 'meta_description']);
 });
 
 it('should eager load subcategories with the correct columns', function (): void {

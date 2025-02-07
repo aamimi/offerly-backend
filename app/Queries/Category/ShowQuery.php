@@ -18,7 +18,7 @@ final readonly class ShowQuery
     public function builder(string $slug): Builder
     {
         return Category::query()
-            ->select(['id', 'name', 'slug'])
+            ->select(['id', 'name', 'slug', 'meta_title', 'meta_description'])
             ->whereNull(columns: 'parent_id')
             ->where(column: 'slug', operator: '=', value: $slug)
             ->with([

@@ -26,6 +26,8 @@ it('can show a category', function (): void {
             'id',
             'name',
             'slug',
+            'meta_title',
+            'meta_description',
             'subcategories' => [
                 '*' => [
                     'id',
@@ -36,6 +38,14 @@ it('can show a category', function (): void {
             ],
         ],
     ]);
+});
+
+it('returns 404 when category not found', function (): void {
+    // Act: Send a GET request to the show endpoint with a non-existent slug
+    $response = $this->getJson('/api/v1/categories/non-existent-slug');
+
+    // Assert: Check if the response status is 404
+    $response->assertStatus(404);
 });
 
 it('can show a category with subcategories', function (): void {
