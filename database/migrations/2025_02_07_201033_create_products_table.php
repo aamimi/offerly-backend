@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string(column: 'title');
             $table->text(column: 'summary')->nullable();
             $table->text(column: 'description')->nullable();
-            $table->decimal(column: 'price');
+            $table->decimal(column: 'price')->nullable();
             $table->decimal(column: 'discount_price')->nullable();
             $table->integer(column: 'rating')->default(value: 0);
             $table->integer(column: 'views')->default(value: 0);

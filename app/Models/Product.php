@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property string $title
  * @property string|null $summary
  * @property string|null $description
- * @property float $price
+ * @property float|null $price
  * @property float|null $discount_price
  * @property int $rating
  * @property int $views

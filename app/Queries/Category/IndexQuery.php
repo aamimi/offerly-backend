@@ -13,7 +13,7 @@ final readonly class IndexQuery
     /**
      * The limit of subcategories.
      */
-    public const LIMIT = 5;
+    public const int LIMIT = 5;
 
     /**
      * Get the query builder.

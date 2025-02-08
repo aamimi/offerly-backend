@@ -21,7 +21,7 @@ final class ProductSeeder extends Seeder
     {
         Category::all()->each(function (Category $category): void {
             Product::factory()
-                ->count(300)
+                ->count(10)
                 ->for($category)
                 ->has(MetaTag::factory()->count(1), 'metaTag')
                 ->create();

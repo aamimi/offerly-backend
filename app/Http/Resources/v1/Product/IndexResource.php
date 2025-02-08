@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources\v1\Category;
+namespace App\Http\Resources\v1\Product;
 
-use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
 
-/** @mixin Category */
+/** @mixin Product */
 final class IndexResource extends JsonResource
 {
     /**
@@ -21,10 +21,13 @@ final class IndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
             'slug' => $this->slug,
-            'subcategories' => SubcategoryResource::collection($this->whenLoaded('subcategories')),
+            'title' => $this->title,
+            'summary' => $this->summary,
+            'price' => $this->price,
+            'discount_price' => $this->discount_price,
+            'thumbnail' => 'https://placehold.co/150x150',
+            'rating' => $this->rating,
         ];
     }
 }

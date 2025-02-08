@@ -7,6 +7,7 @@ namespace App\Http\Resources\v1\Category;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Override;
 
 /** @mixin Category */
 final class SubcategoryResource extends JsonResource
@@ -16,6 +17,7 @@ final class SubcategoryResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    #[Override]
     public function toArray(Request $request): array
     {
         return [

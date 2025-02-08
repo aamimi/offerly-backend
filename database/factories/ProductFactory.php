@@ -22,9 +22,9 @@ final class ProductFactory extends Factory
         return [
             'slug' => $this->faker->unique()->slug,
             'title' => $this->faker->sentence,
-            'summary' => $this->faker->text(50),
-            'description' => $this->faker->text,
-            'price' => $this->faker->randomFloat(2, 1, 1000),
+            'summary' => $this->faker->optional()->text(50),
+            'description' => $this->faker->optional()->text,
+            'price' => $this->faker->optional()->randomFloat(2, 1, 1000),
             'discount_price' => $this->faker->optional()->randomFloat(2, 1, 1000),
             'rating' => $this->faker->numberBetween(-2000, 99999),
             'views' => $this->faker->numberBetween(0, 999999),

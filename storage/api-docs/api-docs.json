@@ -58,6 +58,44 @@
                     }
                 }
             }
+        },
+        "/api/v1/products": {
+            "get": {
+                "tags": ["Products"],
+                "summary": "Get products",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Product"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "skip": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "limit": {
+                                            "type": "integer",
+                                            "example": 10
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -104,6 +142,42 @@
                         "items": {
                             "$ref": "#/components/schemas/Subcategory"
                         }
+                    }
+                }
+            },
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "rating": {
+                        "type": "number",
+                        "example": 5435
+                    },
+                    "price": {
+                        "type": "number",
+                        "nullable": true,
+                        "example": 52.15
+                    },
+                    "discount_price": {
+                        "type": "number",
+                        "nullable": true,
+                        "example": 45.15
+                    },
+                    "thumbnail": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "https://placehold.co/150x150",
+                        "format": "uri",
+                        "description": "Image URL"
                     }
                 }
             },
