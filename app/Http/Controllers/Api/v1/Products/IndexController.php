@@ -6,10 +6,16 @@ namespace App\Http\Controllers\Api\v1\Products;
 
 use App\Http\Resources\v1\Product\IndexCollection;
 use App\Models\Product;
+use App\Queries\Product\IndexQuery;
 use Illuminate\Http\Request;
 
 final readonly class IndexController
 {
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(private IndexQuery $query) {}
+
     /**
      * List of products.
      */
@@ -18,10 +24,11 @@ final readonly class IndexController
         $skip = (int) $request->query(key: 'skip', default: '0');
         $limit = (int) $request->query(key: 'limit', default: '10');
 
-        return (new IndexCollection(Product::query()->skip($skip)->limit($limit)->get()))->additional([
-            'total' => Product::query()->count(),
-            'skip' => $skip,
-            'limit' => $limit,
-        ]);
+        return (new IndexCollection($this->query->builder(skip: $skip, limit: $limit)->get()))
+            ->additional([
+                'total' => Product::query()->count(),
+                'skip' => $skip,
+                'limit' => $limit,
+            ]);
     }
 }
