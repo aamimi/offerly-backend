@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer(column: 'rating')->default(value: 0);
             $table->integer(column: 'views')->default(value: 0);
             $table->foreignId(column: 'category_id')->constrained('categories');
-            $table->dateTime(column: 'published_at');
+            $table->dateTime(column: 'published_at')->nullable();
             $table->dateTime(column: 'created_at')->useCurrent();
             $table->dateTime(column: 'updated_at')->useCurrentOnUpdate();
         });

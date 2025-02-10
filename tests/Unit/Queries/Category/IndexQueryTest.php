@@ -100,7 +100,7 @@ it(
         }
     }
 )->with([
-    [
+    'first data order' => [
         'data' => [
             ['name' => 'Category A', 'display_order' => 0],
             ['name' => 'Category B', 'display_order' => 0],
@@ -110,7 +110,7 @@ it(
         ],
         'order' => [0, 1, 2, 3, 4],
     ],
-    [
+    'second data order' => [
         'data' => [
             ['name' => 'Category B', 'display_order' => 0], // 0
             ['name' => 'Category A', 'display_order' => 0], // 1
@@ -120,7 +120,7 @@ it(
         ],
         'order' => [1, 0, 2, 4, 3],
     ],
-    [
+    'third data order' => [
         'data' => [
             ['name' => 'Category A', 'display_order' => 1], // 0
             ['name' => 'Category B', 'display_order' => 0], // 1
@@ -130,7 +130,7 @@ it(
         ],
         'order' => [1, 3, 0, 2, 4],
     ],
-    [
+    'fourth data order' => [
         'data' => [
             ['name' => 'Category A', 'display_order' => 5], // 0
             ['name' => 'Category B', 'display_order' => 3], // 1

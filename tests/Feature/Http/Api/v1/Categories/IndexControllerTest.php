@@ -55,6 +55,6 @@ it('returns the correct response structure for the list of categories', function
         ],
     ]);
 })->with([
-    fn () => Category::factory()->create(),
-    fn () => Category::factory()->has(Category::factory()->count(2), 'subcategories')->create(),
+    'One Category' => fn () => Category::factory()->create(),
+    'Many Category' => fn () => Category::factory()->has(Category::factory()->count(2), 'subcategories')->create(),
 ]);

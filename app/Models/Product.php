@@ -25,7 +25,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int $rating
  * @property int $views
  * @property int $category_id
- * @property Carbon $published_at
+ * @property Carbon|null $published_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Category $category

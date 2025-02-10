@@ -27,8 +27,15 @@ final class ProductFactory extends Factory
             'price' => $this->faker->optional()->randomFloat(2, 1, 1000),
             'discount_price' => $this->faker->optional()->randomFloat(2, 1, 1000),
             'rating' => $this->faker->numberBetween(-2000, 99999),
-            'views' => $this->faker->numberBetween(0, 999999),
-            'published_at' => $this->faker->dateTime,
+            'views' => $this->faker->numberBetween(0, 999999)
         ];
+    }
+
+    /**
+     * Indicate that the product is published.
+     */
+    public function published(): self
+    {
+        return $this->state(fn (): array => ['published_at' => now()]);
     }
 }

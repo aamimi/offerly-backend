@@ -18,6 +18,7 @@ final readonly class IndexQuery
     {
         return Product::query()
             ->select(['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating'])
+            ->whereNotNull('published_at')
             ->skip($skip)
             ->limit($limit);
     }

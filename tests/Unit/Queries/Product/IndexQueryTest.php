@@ -18,9 +18,18 @@ it('should return the query builder with the correct columns', function (): void
 
 it('should return correct number of products', function (int $nbProduct): void {
     $category = Category::factory()->create()->refresh();
-    Product::factory()->for($category)->count($nbProduct)->create();
+    Product::factory()->published()->for($category)->count($nbProduct)->create();
     $query = new IndexQuery();
     $builder = $query->builder(0, 10);
     $expectedCount = min($nbProduct, 10);
     expect($builder->get()->count())->toBe($expectedCount);
 })->with([5, 10, 15]);
+
+it('should return only published products', function (): void {
+    $category = Category::factory()->create()->refresh();
+    Product::factory()->published()->for($category)->create();
+    Product::factory()->for($category)->create();
+    $query = new IndexQuery();
+    $builder = $query->builder(0, 10);
+    expect($builder->get()->count())->toBe(1);
+});
