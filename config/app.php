@@ -128,4 +128,12 @@ return [
     'default_images' => [
         'category' => 'images/default-category.svg',
     ],
+
+    'media_collections' => [
+        'products' => [
+            'name' => 'images',
+            'disk' => 'products',
+            'maximum_number_of_items' => 8,
+        ],
+    ]
 ];

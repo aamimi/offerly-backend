@@ -23,8 +23,8 @@ final readonly class IndexController
     {
         $skip = (int) $request->query(key: 'skip', default: '0');
         $limit = (int) $request->query(key: 'limit', default: '10');
-
-        return (new IndexCollection($this->query->builder(skip: $skip, limit: $limit)->get()))
+        $products = $this->query->builder($skip, $limit)->get();
+        return (new IndexCollection($products))
             ->additional([
                 'total' => Product::query()->count(),
                 'skip' => $skip,

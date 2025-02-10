@@ -10,8 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
+ * @property int $id
  * @property string $slug
  * @property string $title
  * @property string|null $summary
@@ -27,10 +30,23 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property-read Category $category
  * @property-read MetaTag $metaTag
  */
-final class Product extends Model
+final class Product extends Model implements HasMedia
 {
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
+    use InteractsWithMedia;
+
+    /**
+     * Register the product media collections.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(name: config('app.media_collections.products.name'))
+            ->useDisk(diskName: config('app.media_collections.products.disk'))
+            ->onlyKeepLatest(
+                maximumNumberOfItemsInCollection: config('app.media_collections.products.maximum_number_of_items')
+            );
+    }
 
     /**
      * Get the category of the product.

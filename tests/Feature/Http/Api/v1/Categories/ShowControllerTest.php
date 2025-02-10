@@ -9,7 +9,7 @@ uses(RefreshDatabase::class);
 
 it('can show a category', function (): void {
     // Arrange: Create a category
-    $category = Category::factory()->create();
+    $category = Category::factory()->create()->refresh();
 
     // Act: Send a GET request to the show endpoint
     $response = $this->getJson('/api/v1/categories/'.$category->slug);
@@ -50,7 +50,7 @@ it('returns 404 when category not found', function (): void {
 
 it('can show a category with subcategories', function (): void {
     // Arrange: Create a parent category
-    $parentCategory = Category::factory()->create();
+    $parentCategory = Category::factory()->create()->refresh();
 
     // Arrange: Create a subcategory
     $subcategory = Category::factory()->create(['parent_id' => $parentCategory->id]);

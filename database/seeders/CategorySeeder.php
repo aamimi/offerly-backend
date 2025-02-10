@@ -22,7 +22,7 @@ final class CategorySeeder extends Seeder
     {
         Category::factory()
             ->count(10)
-            ->has(Category::factory()->count(random_int(10, 20)), 'subcategories')
+            ->has(Category::factory()->count(random_int(10, 15)), 'subcategories')
             ->create();
     }
 }

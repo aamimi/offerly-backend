@@ -23,7 +23,7 @@ it('should return the query builder with the correct columns', function (): void
 
 it('should eager load subcategories with the correct columns', function (): void {
     // Arrange: Create a parent category
-    $category = Category::factory()->create();
+    $category = Category::factory()->create()->refresh();
 
     // Arrange: Create subcategories for the parent category
     Category::factory()->count(2)->create(['parent_id' => $category->id]);
@@ -39,7 +39,7 @@ it('should eager load subcategories with the correct columns', function (): void
 
 it('returns the correct category and the correct subcategories', function (): void {
     // Arrange: Create a category
-    $category = Category::factory()->create();
+    $category = Category::factory()->create()->refresh();
 
     // Arrange: Create subcategories for the parent category
     $subcategories = Category::factory()->count(2)->create(['parent_id' => $category->id]);

@@ -16,7 +16,7 @@ it('should return the query builder with the correct columns', function (): void
 
 it('should eager load subcategories with the correct columns', function (): void {
     // Arrange: Create a parent category
-    $category = Category::factory()->create();
+    $category = Category::factory()->create()->refresh();
 
     // Arrange: Create subcategories for the parent category
     Category::factory()->count(2)->create(['parent_id' => $category->id]);
@@ -32,7 +32,7 @@ it('should eager load subcategories with the correct columns', function (): void
 
 it('returns the correct subcategories for the parent category', function (): void {
     // Arrange: Create a parent category
-    $category = Category::factory()->create();
+    $category = Category::factory()->create()->refresh();
 
     // Arrange: Create subcategories for the parent category
     $subcategories = Category::factory()->count(2)->create(['parent_id' => $category->id]);
@@ -49,7 +49,7 @@ it('returns the correct subcategories for the parent category', function (): voi
 
 it('returns the correct response structure for the parent category with subcategories', function (): void {
     // Arrange: Create a parent category
-    $category = Category::factory()->create();
+    $category = Category::factory()->create()->refresh();
 
     // Arrange: Create subcategories for the parent category
     Category::factory()->count(2)->create(['parent_id' => $category->id]);
@@ -67,7 +67,7 @@ it('returns the correct response structure for the parent category with subcateg
 
 it('limits the number of subcategories', function (int $count): void {
     // Arrange: Create a parent category
-    $category = Category::factory()->create();
+    $category = Category::factory()->create()->refresh();
 
     // Arrange: Create subcategories for the parent category
     Category::factory()->count($count)->create(['parent_id' => $category->id]);
@@ -86,8 +86,9 @@ it(
     'returns list of categories ordered by display_order asc then by name asc',
     function (array $data, array $order): void {
         // Arrange: Create categories with different display_order and views
+        $categories = [];
         foreach ($data as $item) {
-            $categories[] = Category::factory()->create($item);
+            $categories[] = Category::factory()->create($item)->refresh();
         }
 
         // Act: Get the categories
@@ -143,11 +144,12 @@ it(
 
 it('orders subcategories by views desc then display_order desc', function (array $order, array $data): void {
     // Arrange: Create a parent category
-    $parentCategory = Category::factory()->create();
+    $parentCategory = Category::factory()->create()->refresh();
 
     // Arrange: Create subcategories with different display_order and views
+    $subcategories = [];
     foreach ($data as $item) {
-        $subcategories[] = Category::factory()->create(['parent_id' => $parentCategory->id, ...$item]);
+        $subcategories[] = Category::factory()->create(['parent_id' => $parentCategory->id, ...$item])->refresh();
     }
 
     // Act: Get the first parent category with its subcategories

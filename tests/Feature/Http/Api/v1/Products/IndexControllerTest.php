@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 it('can list products', function (): void {
     // Arrange: Create a product
-    $category = Category::factory()->create();
-    $product = Product::factory()->for($category)->create();
+    $category = Category::factory()->create()->refresh();
+    $product = Product::factory()->for($category)->create()->refresh();
 
     // Act: Send a GET request to the index endpoint
     $response = $this->getJson('/api/v1/products');
@@ -33,7 +36,13 @@ it('returns the correct response structure for the list of products', function (
                 'summary',
                 'price',
                 'discount_price',
-                'thumbnail',
+                'thumbnail' => [
+                    'url',
+                    'name',
+                    'file_name',
+                    'size',
+                    'mime_type',
+                ],
                 'rating',
             ],
         ],
@@ -42,6 +51,6 @@ it('returns the correct response structure for the list of products', function (
         'limit',
     ]);
 })->with([
-    'One Product' => fn () => Product::factory()->for(Category::factory()->create())->create(),
-    'Many Product' => fn () => Product::factory()->for(Category::factory()->create())->count(30)->create(),
+    'One Product' => fn() => Product::factory()->for(Category::factory()->create())->create(),
+    'Many Product' => fn() => Product::factory()->for(Category::factory()->create())->count(30)->create(),
 ]);

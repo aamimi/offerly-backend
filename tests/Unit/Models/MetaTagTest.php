@@ -5,6 +5,9 @@ declare(strict_types=1);
 use App\Models\Category;
 use App\Models\MetaTag;
 use App\Models\Product;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 test('to array', function (): void {
     $category = Category::factory()->create()->refresh();

@@ -17,7 +17,7 @@ final readonly class IndexQuery
     public function builder(int $skip, int $limit): Builder
     {
         return Product::query()
-            ->select(['slug', 'title', 'summary', 'price', 'discount_price', 'rating'])
+            ->select(['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating'])
             ->skip($skip)
             ->limit($limit);
     }

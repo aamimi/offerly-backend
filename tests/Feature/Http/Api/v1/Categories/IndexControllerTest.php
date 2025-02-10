@@ -9,10 +9,10 @@ uses(RefreshDatabase::class);
 
 it('can list only parent categories', function (): void {
     // Arrange: Create a parent category
-    $parentCategory = Category::factory()->create();
+    $parentCategory = Category::factory()->create()->refresh();
 
     // Arrange: Create a subcategory
-    $subcategory = Category::factory()->create(['parent_id' => $parentCategory->id]);
+    $subcategory = Category::factory()->create(['parent_id' => $parentCategory->id])->refresh();
 
     // Act: Send a GET request to the index endpoint
     $response = $this->getJson('/api/v1/categories');
