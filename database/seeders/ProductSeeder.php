@@ -27,9 +27,9 @@ final class ProductSeeder extends Seeder
                 ->for($category)
                 ->has(MetaTag::factory()->count(1), 'metaTag')
                 ->create();
-            try{
+            try {
                 $products->each(function (Product $product): void {
-                    for ($i = 0; $i < random_int(1, 4); $i++) {
+                    for ($i = 0; $i < random_int(1, 4); ++$i) {
                         $product->addMedia(public_path('images/placeholderX400.jpg'))
                             ->preservingOriginal()
                             ->toMediaCollection('products');

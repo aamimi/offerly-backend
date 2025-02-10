@@ -51,6 +51,6 @@ it('returns the correct response structure for the list of products', function (
         'limit',
     ]);
 })->with([
-    'One Product' => fn() => Product::factory()->for(Category::factory()->create())->create(),
-    'Many Product' => fn() => Product::factory()->for(Category::factory()->create())->count(30)->create(),
+    'One Product' => fn () => Product::factory()->for(Category::factory()->create())->create(),
+    'Many Product' => fn () => Product::factory()->for(Category::factory()->create())->count(30)->create(),
 ]);

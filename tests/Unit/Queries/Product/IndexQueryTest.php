@@ -16,7 +16,7 @@ it('should return the query builder with the correct columns', function (): void
         ->toBe(['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating']);
 });
 
-it("should return correct number of products", function (int $nbProduct): void {
+it('should return correct number of products', function (int $nbProduct): void {
     $category = Category::factory()->create()->refresh();
     Product::factory()->for($category)->count($nbProduct)->create();
     $query = new IndexQuery();

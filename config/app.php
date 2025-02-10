@@ -135,5 +135,5 @@ return [
             'disk' => 'products',
             'maximum_number_of_items' => 8,
         ],
-    ]
+    ],
 ];

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Facades\Config;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -34,6 +35,7 @@ final class Product extends Model implements HasMedia
 {
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
+
     use InteractsWithMedia;
 
     /**
@@ -41,10 +43,12 @@ final class Product extends Model implements HasMedia
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection(name: config('app.media_collections.products.name'))
-            ->useDisk(diskName: config('app.media_collections.products.disk'))
+        $this->addMediaCollection(name: Config::string('app.media_collections.products.name'))
+            ->useDisk(diskName: Config::string('app.media_collections.products.disk'))
             ->onlyKeepLatest(
-                maximumNumberOfItemsInCollection: config('app.media_collections.products.maximum_number_of_items')
+                maximumNumberOfItemsInCollection: Config::integer(
+                    'app.media_collections.products.maximum_number_of_items'
+                )
             );
     }
 

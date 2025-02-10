@@ -21,6 +21,7 @@ final class IndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         $thumbnail = $this->getFirstMedia('products');
+
         return [
             'slug' => $this->slug,
             'title' => $this->title,
