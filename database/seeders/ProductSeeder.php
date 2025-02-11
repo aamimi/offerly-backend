@@ -9,6 +9,7 @@ use App\Models\MetaTag;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Config;
 use Random\RandomException;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 
@@ -34,7 +35,7 @@ final class ProductSeeder extends Seeder
                     for ($i = 0; $i < random_int(1, 4); ++$i) {
                         $product->addMedia(public_path('images/placeholderX400.jpg'))
                             ->preservingOriginal()
-                            ->toMediaCollection('products');
+                            ->toMediaCollection(Config::string('app.media_collections.products.name'));
                     }
                 });
             } catch (FileCannotBeAdded|RandomException $e) {

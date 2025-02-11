@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 use App\Models\Category;
+use App\Models\Media;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 
 uses(RefreshDatabase::class);
 
@@ -24,6 +26,18 @@ it('can list products', function (): void {
 });
 
 it('returns the correct response structure for the list of products', function (): void {
+    // Arrange: Create products
+    $product = Product::factory()->published()
+        ->for(Category::factory()->create())
+        ->create();
+    Media::factory()
+        ->for($product, 'model')
+        ->count(2)
+        ->create([
+            'collection_name' => Config::string('app.media_collections.products.name'),
+            'disk' => Config::string('app.media_collections.products.disk'),
+        ]);
+
     // Act: Send a GET request to the index endpoint
     $response = $this->getJson('/api/v1/products');
 
@@ -50,10 +64,7 @@ it('returns the correct response structure for the list of products', function (
         'skip',
         'limit',
     ]);
-})->with([
-    'One Product' => fn () => Product::factory()->published()->for(Category::factory()->create())->create(),
-    'Many Product' => fn () => Product::factory()->published()->for(Category::factory()->create())->count(30)->create(),
-]);
+});
 
 it('return the correct total for the list of products', function (int $total): void {
     // Arrange: Create products

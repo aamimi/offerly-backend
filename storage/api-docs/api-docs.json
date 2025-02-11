@@ -55,7 +55,12 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/CategoryDetails"
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/CategoryDetails"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -130,6 +135,44 @@
                                         "limit": {
                                             "type": "integer",
                                             "example": 10
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/products/{slug}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get product by slug",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/ProductDetails"
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/MetaTags"
                                         }
                                     }
                                 }
@@ -215,11 +258,46 @@
                         "example": 45.15
                     },
                     "thumbnail": {
+                        "$ref": "#/components/schemas/Image"
+                    }
+                }
+            },
+            "ProductDetails": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "summary": {
                         "type": "string",
+                        "nullable": true
+                    },
+                    "rating": {
+                        "type": "number",
+                        "example": 5435
+                    },
+                    "price": {
+                        "type": "number",
                         "nullable": true,
-                        "example": "https://placehold.co/150x150",
-                        "format": "uri",
-                        "description": "Image URL"
+                        "example": 52.15
+                    },
+                    "discount_price": {
+                        "type": "number",
+                        "nullable": true,
+                        "example": 45.15
+                    },
+                    "description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Image"
+                        }
                     }
                 }
             },
@@ -252,6 +330,81 @@
                         "items": {
                             "$ref": "#/components/schemas/Subcategory"
                         }
+                    }
+                }
+            },
+            "MetaTags": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "keywords": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "og_title": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "og_description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "og_image": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true
+                    },
+                    "x_title": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "x_description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "x_image": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "robots_follow": {
+                        "type": "boolean"
+                    },
+                    "robots_index": {
+                        "type": "boolean"
+                    },
+                    "canonical_url": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "Image": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "Image URL"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "file_name": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "mime_type": {
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             }

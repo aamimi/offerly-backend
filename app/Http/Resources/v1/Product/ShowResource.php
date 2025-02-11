@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources\v1\Product;
 
 use App\Http\Resources\v1\Media\ShowResource as ShowMediaResource;
+use App\Http\Resources\v1\MetaTag\ShowResource as ShowMetaTagResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Config;
 use Override;
 
 /** @mixin Product */
-final class IndexResource extends JsonResource
+final class ShowResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,16 +23,30 @@ final class IndexResource extends JsonResource
     #[Override]
     public function toArray(Request $request): array
     {
-        $thumbnail = $this->getFirstMedia(Config::string('app.media_collections.products.name'));
+        $mediaCollection = $this->getMedia(Config::string('app.media_collections.products.name'));
 
         return [
             'slug' => $this->slug,
             'title' => $this->title,
             'summary' => $this->summary,
+            'description' => $this->description,
             'price' => $this->price,
             'discount_price' => $this->discount_price,
-            'thumbnail' => new ShowMediaResource($thumbnail),
+            'images' => ShowMediaResource::collection($mediaCollection),
             'rating' => $this->rating,
+        ];
+    }
+
+    /**
+     * Get additional data that should be returned with the resource array.
+     *
+     * @return array<string, mixed>
+     */
+    #[Override]
+    public function with(Request $request): array
+    {
+        return [
+            'meta' => (new ShowMetaTagResource($this->metaTag))->toArray($request),
         ];
     }
 }
