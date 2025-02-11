@@ -16,15 +16,15 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table): void {
             $table->id();
             $table->string(column: 'slug')->unique();
-            $table->string(column: 'title');
-            $table->text(column: 'summary')->nullable();
+            $table->string(column: 'title')->index();
+            $table->text(column: 'summary')->nullable()->index();
             $table->text(column: 'description')->nullable();
             $table->decimal(column: 'price')->nullable();
             $table->decimal(column: 'discount_price')->nullable();
             $table->integer(column: 'rating')->default(value: 0);
             $table->integer(column: 'views')->default(value: 0);
-            $table->foreignId(column: 'category_id')->constrained('categories');
-            $table->dateTime(column: 'published_at')->nullable();
+            $table->foreignId(column: 'category_id')->index()->constrained('categories');
+            $table->dateTime(column: 'published_at')->nullable()->index();
             $table->dateTime(column: 'created_at')->useCurrent();
             $table->dateTime(column: 'updated_at')->useCurrentOnUpdate();
         });

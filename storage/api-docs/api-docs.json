@@ -7,7 +7,9 @@
     "paths": {
         "/api/v1/categories": {
             "get": {
-                "tags": ["Categories"],
+                "tags": [
+                    "Categories"
+                ],
                 "summary": "Get categories with subcategories",
                 "responses": {
                     "200": {
@@ -33,7 +35,9 @@
         },
         "/api/v1/categories/{slug}": {
             "get": {
-                "tags": ["Categories"],
+                "tags": [
+                    "Categories"
+                ],
                 "summary": "Get category with subcategories by slug",
                 "parameters": [
                     {
@@ -61,8 +65,46 @@
         },
         "/api/v1/products": {
             "get": {
-                "tags": ["Products"],
+                "tags": [
+                    "Products"
+                ],
                 "summary": "Get products",
+                "parameters": [
+                    {
+                        "name": "skip",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation",

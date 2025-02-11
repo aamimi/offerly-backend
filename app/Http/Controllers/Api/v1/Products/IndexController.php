@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\v1\Products;
 
+use App\Filters\Product\IndexFilter;
 use App\Http\Resources\v1\Product\IndexCollection;
-use App\Models\Product;
 use App\Queries\Product\IndexQuery;
 use Illuminate\Http\Request;
 
@@ -21,15 +21,21 @@ final readonly class IndexController
      */
     public function __invoke(Request $request): IndexCollection
     {
-        $skip = (int) $request->query(key: 'skip', default: '0');
-        $limit = (int) $request->query(key: 'limit', default: '10');
-        $products = $this->query->builder($skip, $limit)->get();
+        $categorySlug = $request->query('category');
+        $search = $request->query('search');
+        $indexFilter = new IndexFilter(
+            skip: (int) $request->query(key: 'skip', default: '0'),
+            limit: (int) $request->query(key: 'limit', default: '10'),
+            categorySlug: is_array($categorySlug) ? null : $categorySlug,
+            search: is_array($search) ? null : $search,
+        );
+        $builder = $this->query->builder($indexFilter);
 
-        return (new IndexCollection($products))
+        return (new IndexCollection($builder->get()))
             ->additional([
-                'total' => Product::query()->count(),
-                'skip' => $skip,
-                'limit' => $limit,
+                'total' => $builder->count(),
+                'skip' => $indexFilter->skip,
+                'limit' => $indexFilter->limit,
             ]);
     }
 }

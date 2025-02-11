@@ -26,7 +26,9 @@ final class ProductSeeder extends Seeder
                 ->count(10)
                 ->for($category)
                 ->has(MetaTag::factory()->count(1), 'metaTag')
-                ->create();
+                ->create([
+                    'published_at' => random_int(0, 1) !== 0 ? now() : null,
+                ]);
             try {
                 $products->each(function (Product $product): void {
                     for ($i = 0; $i < random_int(1, 4); ++$i) {

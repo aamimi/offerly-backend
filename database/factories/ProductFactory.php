@@ -27,7 +27,7 @@ final class ProductFactory extends Factory
             'price' => $this->faker->optional()->randomFloat(2, 1, 1000),
             'discount_price' => $this->faker->optional()->randomFloat(2, 1, 1000),
             'rating' => $this->faker->numberBetween(-2000, 99999),
-            'views' => $this->faker->numberBetween(0, 999999)
+            'views' => $this->faker->numberBetween(0, 999999),
         ];
     }
 

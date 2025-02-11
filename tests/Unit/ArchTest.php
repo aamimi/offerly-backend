@@ -76,6 +76,7 @@ arch('models')
         'Database\Seeders',
         'App\Policies',
         'App\Queries',
+        'App\Filters',
     ]);
 
 arch('actions')
