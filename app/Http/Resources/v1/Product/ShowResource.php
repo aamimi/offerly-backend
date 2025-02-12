@@ -6,6 +6,7 @@ namespace App\Http\Resources\v1\Product;
 
 use App\Http\Resources\v1\Media\ShowResource as ShowMediaResource;
 use App\Http\Resources\v1\MetaTag\ShowResource as ShowMetaTagResource;
+use App\Models\MetaTag;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -32,8 +33,9 @@ final class ShowResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'discount_price' => $this->discount_price,
-            'images' => ShowMediaResource::collection($mediaCollection),
+            'images' => ShowMediaResource::collection($mediaCollection)->toArray($request),
             'rating' => $this->rating,
+            'created_at' => $this->created_at->toDateTimeString(),
         ];
     }
 
@@ -45,8 +47,17 @@ final class ShowResource extends JsonResource
     #[Override]
     public function with(Request $request): array
     {
+        $metaTag = $this->metaTag ?? new MetaTag();
+
+        $metaTag->title ??= $this->title;
+        $metaTag->description ??= $this->summary;
+        $metaTag->og_title ??= $metaTag->title;
+        $metaTag->x_title ??= $metaTag->title;
+        $metaTag->og_description ??= $metaTag->description;
+        $metaTag->x_description ??= $metaTag->description;
+
         return [
-            'meta' => (new ShowMetaTagResource($this->metaTag))->toArray($request),
+            'meta' => (new ShowMetaTagResource($metaTag))->toArray($request),
         ];
     }
 }

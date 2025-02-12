@@ -17,7 +17,11 @@ final readonly class ShowQuery
     public function builder(string $slug): Builder
     {
         return Product::query()
+            ->select(
+                ['id', 'slug', 'title', 'summary', 'description', 'price', 'discount_price', 'rating', 'created_at']
+            )
             ->whereNotNull(columns: 'published_at')
-            ->where(column: 'slug', operator: '=', value: $slug);
+            ->where(column: 'slug', operator: '=', value: $slug)
+            ->with(['metaTag', 'media']);
     }
 }

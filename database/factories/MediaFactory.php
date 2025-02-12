@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Models\Media;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Config;
 
 /**
  * @extends Factory<Media>
@@ -31,5 +32,16 @@ final class MediaFactory extends Factory
             'generated_conversions' => json_encode([]),
             'responsive_images' => json_encode([]),
         ];
+    }
+
+    /**
+     * Indicate that the media is for product collection name and disk.
+     */
+    public function forProduct(): self
+    {
+        return $this->state(fn (): array => [
+            'collection_name' => Config::string('app.media_collections.products.name'),
+            'disk' => Config::string('app.media_collections.products.disk'),
+        ]);
     }
 }
