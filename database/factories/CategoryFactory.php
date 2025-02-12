@@ -22,8 +22,6 @@ final class CategoryFactory extends Factory
         return [
             'slug' => $this->faker->unique()->slug,
             'name' => $this->faker->name,
-            'meta_title' => $this->faker->optional()->sentence,
-            'meta_description' => $this->faker->optional()->sentence,
             'display_order' => $this->faker->randomNumber(),
             'views' => $this->faker->randomNumber(),
         ];

@@ -24,8 +24,6 @@ final class ShowResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'meta_title' => $this->getMetaTitle(),
-            'meta_description' => $this->meta_description,
             'subcategories' => SubcategoryResource::collection($this->whenLoaded('subcategories')),
         ];
     }

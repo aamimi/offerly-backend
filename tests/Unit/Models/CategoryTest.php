@@ -21,8 +21,6 @@ test('to array', function (): void {
         'slug',
         'name',
         'image_url',
-        'meta_title',
-        'meta_description',
         'display_order',
         'views',
         'created_at',
@@ -54,11 +52,3 @@ it('returns the correct image URL', function (): void {
     $catWithoutImage = Category::factory()->create(['image_url' => null])->refresh();
     expect($catWithoutImage->getImageUrl())->toBe(asset(Config::string('app.default_images.category')));
 })->note('This test is incomplete check if using s3.');
-
-it('returns the correct meta title', function (): void {
-    $category = Category::factory()->create(['meta_title' => 'Meta Title'])->refresh();
-    expect($category->getMetaTitle())->toBe('Meta Title');
-
-    $category = Category::factory()->create(['meta_title' => null, 'name' => 'Category Name'])->refresh();
-    expect($category->getMetaTitle())->toBe('Category Name');
-});

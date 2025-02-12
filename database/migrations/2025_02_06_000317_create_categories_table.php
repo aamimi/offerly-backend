@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string(column: 'slug', length: 100)->unique();
             $table->string(column: 'name', length: 100);
             $table->string('image_url')->nullable();
-            $table->string(column: 'meta_title', length: 255)->nullable();
-            $table->string(column: 'meta_description', length: 255)->nullable();
             $table->unsignedBigInteger('display_order')->default(0);
             $table->unsignedBigInteger('views')->default(0);
             $table->dateTime(column: 'created_at')->useCurrent();

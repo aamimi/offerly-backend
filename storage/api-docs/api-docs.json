@@ -316,15 +316,6 @@
                         "type": "string",
                         "example": "dominic-mayer"
                     },
-                    "meta_title": {
-                        "type": "string",
-                        "example": "Dominic Mayer"
-                    },
-                    "meta_description": {
-                        "type": "string",
-                        "nullable": true,
-                        "example": "Dominic Mayer"
-                    },
                     "subcategories": {
                         "type": "array",
                         "items": {

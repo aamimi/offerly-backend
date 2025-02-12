@@ -26,8 +26,6 @@ it('can show a category', function (): void {
             'id',
             'name',
             'slug',
-            'meta_title',
-            'meta_description',
             'subcategories' => [
                 '*' => [
                     'id',
