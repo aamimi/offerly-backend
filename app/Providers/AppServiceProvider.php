@@ -20,7 +20,12 @@ final class AppServiceProvider extends ServiceProvider
     #[Override]
     public function register(): void
     {
-        //
+        // @codeCoverageIgnoreStart
+        if ($this->app->environment('local') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+        }
+
+        // @codeCoverageIgnoreEnd
     }
 
     /**
