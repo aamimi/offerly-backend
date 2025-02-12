@@ -5,9 +5,6 @@ declare(strict_types=1);
 use App\Models\Category;
 use App\Queries\Category\ShowQuery;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('should return the query builder', function (): void {
     $query = new ShowQuery();

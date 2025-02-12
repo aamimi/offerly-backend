@@ -6,9 +6,6 @@ use App\Models\Category;
 use App\Models\Media;
 use App\Models\MetaTag;
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('can show a product', function (bool $withMedia, bool $withMetaTag): void {
     // Arrange: Create a product

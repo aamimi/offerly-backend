@@ -59,6 +59,9 @@
                                     "properties": {
                                         "data": {
                                             "$ref": "#/components/schemas/CategoryDetails"
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/MetaTags"
                                         }
                                     }
                                 }

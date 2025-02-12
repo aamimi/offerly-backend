@@ -5,10 +5,7 @@ declare(strict_types=1);
 use App\Models\Category;
 use App\Models\Media;
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
-
-uses(RefreshDatabase::class);
 
 it('can list products', function (): void {
     // Arrange: Create a product

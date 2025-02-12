@@ -3,10 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
-
-uses(RefreshDatabase::class);
 
 it('has a factory', function (): void {
     $category = Category::factory()->create()->refresh();

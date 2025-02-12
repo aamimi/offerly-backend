@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Facades\Config;
 
 /**
@@ -46,6 +47,16 @@ final class Category extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(related: self::class, foreignKey: 'parent_id');
+    }
+
+    /**
+     * Get the meta tag of the model.
+     *
+     * @return MorphOne<MetaTag, $this>
+     */
+    public function metaTag(): MorphOne
+    {
+        return $this->morphOne(MetaTag::class, 'metaable');
     }
 
     /**

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 use App\Models\Category;
 use App\Queries\Category\IndexQuery;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('should return the query builder with the correct columns', function (): void {
     $query = new IndexQuery();

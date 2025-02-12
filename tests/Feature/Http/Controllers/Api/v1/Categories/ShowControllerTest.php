@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('can show a category', function (): void {
     // Arrange: Create a category
@@ -34,6 +31,20 @@ it('can show a category', function (): void {
                     'image',
                 ],
             ],
+        ],
+        'meta' => [
+            'title',
+            'description',
+            'keywords',
+            'og_title',
+            'og_description',
+            'og_image',
+            'x_title',
+            'x_description',
+            'x_image',
+            'robots_follow',
+            'robots_index',
+            'canonical_url',
         ],
     ]);
 });

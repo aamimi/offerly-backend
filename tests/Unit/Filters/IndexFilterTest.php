@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 use App\Filters\Product\IndexFilter;
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('can get the category', function (): void {
     $slug = 'category-slug';

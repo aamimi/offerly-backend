@@ -6,9 +6,6 @@ use App\Filters\Product\IndexFilter;
 use App\Models\Category;
 use App\Models\Product;
 use App\Queries\Product\IndexQuery;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('should return the query builder with the correct columns', function (): void {
     $query = new IndexQuery();

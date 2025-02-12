@@ -5,9 +5,6 @@ declare(strict_types=1);
 use App\Models\Category;
 use App\Models\Product;
 use App\Queries\Product\ShowQuery;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('can get the published product by slug', function (): void {
     $slug = 'product-slug';

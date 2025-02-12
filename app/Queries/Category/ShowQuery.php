@@ -26,6 +26,7 @@ final readonly class ShowQuery
                     $query->select(['id', 'name', 'slug', 'parent_id', 'image_url'])
                         ->orderBy(column: 'name');
                 },
+                'metaTag',
             ]);
     }
 }
