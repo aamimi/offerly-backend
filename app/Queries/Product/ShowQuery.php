@@ -6,6 +6,8 @@ namespace App\Queries\Product;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Config;
 
 final readonly class ShowQuery
 {
@@ -22,6 +24,14 @@ final readonly class ShowQuery
             )
             ->whereNotNull(columns: 'published_at')
             ->where(column: 'slug', operator: '=', value: $slug)
-            ->with(['metaTag', 'media']);
+            ->with([
+                'metaTag',
+                'media' => fn (Relation $query) => $query->where(
+                    column: 'collection_name',
+                    operator: '=',
+                    value: Config::string('app.media_collections.products.name')
+                )
+                    ->orderBy(column: 'order_column'),
+            ]);
     }
 }

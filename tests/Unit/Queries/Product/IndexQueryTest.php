@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use App\Filters\Product\IndexFilter;
 use App\Models\Category;
+use App\Models\Media;
 use App\Models\Product;
 use App\Queries\Product\IndexQuery;
+use Illuminate\Support\Facades\Config;
 
 it('should return the query builder with the correct columns', function (): void {
     $query = new IndexQuery();
@@ -107,3 +109,24 @@ it(
     ['search' => 'SUMMARY', 'expected' => 3],
     ['search' => 's', 'expected' => 4],
 ]);
+
+it('should return products with media having the correct collection name and lowest order column', function (): void {
+    $category = Category::factory()->create()->refresh();
+    $product = Product::factory()->published()->for($category)->create();
+    Media::factory()->for($product, 'model')->create([
+        'collection_name' => Config::string('app.media_collections.products.name'),
+        'order_column' => 2,
+    ]);
+    $media = Media::factory()->for($product, 'model')->create([
+        'collection_name' => Config::string('app.media_collections.products.name'),
+        'order_column' => 1,
+    ]);
+    Media::factory()->for($product, 'model')->create([
+        'collection_name' => 'test',
+        'order_column' => 1,
+    ]);
+    $query = new IndexQuery();
+    $builder = $query->builder(new IndexFilter());
+    $product = $builder->first();
+    expect($product->media->first()->uuid)->toBe($media->uuid);
+});

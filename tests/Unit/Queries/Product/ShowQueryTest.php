@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 use App\Models\Category;
+use App\Models\Media;
 use App\Models\Product;
 use App\Queries\Product\ShowQuery;
+use Illuminate\Support\Facades\Config;
 
 it('can get the published product by slug', function (): void {
     $slug = 'product-slug';
@@ -52,4 +54,32 @@ it('can get the product with the required columns', function (): void {
         ->and($fetchedProduct->discount_price)->toBe($product->discount_price)
         ->and($fetchedProduct->rating)->toBe($product->rating)
         ->and($fetchedProduct->created_at->eq($product->created_at))->toBeTrue();
+});
+
+function createMedia(Product $product, int $order, ?string $collection = null): Media
+{
+    $collection ??= Config::get('app.media_collections.products.name');
+
+    return Media::factory()->for($product, 'model')->create([
+        'collection_name' => $collection,
+        'order_column' => $order,
+    ]);
+}
+
+it('should return products with media having the correct collection name and lowest order column', function (): void {
+    $slug = 'product-slug';
+    $category = Category::factory()->create()->refresh();
+    $product = Product::factory()->published()->for($category)->create(['slug' => $slug])->refresh();
+
+    $media2 = createMedia($product, 2);
+    $media1 = createMedia($product, 1);
+    $media3 = createMedia($product, 3);
+    createMedia($product, 1, 'test');
+
+    $query = new ShowQuery();
+    $fetchedProduct = $query->builder($slug)->first();
+    expect($fetchedProduct->media->count())->toBe(3)
+        ->and($fetchedProduct->media[0]->uuid)->toBe($media1->uuid)
+        ->and($fetchedProduct->media[1]->uuid)->toBe($media2->uuid)
+        ->and($fetchedProduct->media[2]->uuid)->toBe($media3->uuid);
 });
