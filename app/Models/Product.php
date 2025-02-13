@@ -32,6 +32,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read Category $category
  * @property-read MetaTag $metaTag
  * @property-read ProductDetail $details
+ * @property-read Comment[] $comments
  */
 final class Product extends Model implements HasMedia
 {

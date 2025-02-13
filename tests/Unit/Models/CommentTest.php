@@ -46,7 +46,8 @@ test('a comment has required fields', function (): void {
 
     expect($comment->content)->not->toBeEmpty()
         ->and($comment->user_id)->not->toBeNull()
-        ->and($comment->product_id)->not->toBeNull();
+        ->and($comment->product_id)->not->toBeNull()
+        ->and($comment->uuid)->not->toBeNull();
 });
 
 test('comment can store emoji', function (): void {
@@ -75,7 +76,7 @@ test('comment well be deleted when user is deleted', function (): void {
 
     $user->delete();
 
-    expect(Comment::find($comment->id))->toBeNull();
+    expect(Comment::query()->find($comment->id))->toBeNull();
 });
 
 test('comment well be deleted when product is deleted', function (): void {
@@ -89,5 +90,5 @@ test('comment well be deleted when product is deleted', function (): void {
 
     $product->delete();
 
-    expect(Comment::find($comment->id))->toBeNull();
+    expect(Comment::query()->find($comment->id))->toBeNull();
 });

@@ -41,6 +41,7 @@ it('can show a product', function (bool $withMedia, bool $withMetaTag): void {
             'discount_price',
             'rating',
             'created_at',
+            'has_comments',
             'images' => [
                 '*' => [
                     'url',

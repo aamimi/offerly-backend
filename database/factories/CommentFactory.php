@@ -22,6 +22,7 @@ final class CommentFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid' => $this->faker->uuid,
             'content' => $this->faker->paragraph,
             'user_id' => User::factory(),
             'product_id' => Product::factory(),

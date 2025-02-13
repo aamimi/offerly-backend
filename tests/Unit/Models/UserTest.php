@@ -9,7 +9,9 @@ test('to array', function (): void {
     $user = User::factory()->create()->refresh();
     expect(array_keys($user->toArray()))->toEqual([
         'id',
-        'name',
+        'username',
+        'first_name',
+        'last_name',
         'email',
         'email_verified_at',
         'created_at',

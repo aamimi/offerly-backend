@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Comment;
 use App\Models\Media;
 use App\Models\Product;
 use App\Models\ProductDetail;
@@ -91,4 +92,19 @@ it('should return product with product details', function (): void {
     $fetchedProduct = $query->builder($slug)->first();
     expect($fetchedProduct->details)->is($productDetails)
         ->and($fetchedProduct->details)->tohaveKeys(['id', 'product_id', 'description', 'instructions', 'conditions']);
+});
+
+it('should return comments count', function (): void {
+    $slug1 = 'product-slug-1';
+    Product::factory()->published()->create(['slug' => $slug1]);
+    $slug2 = 'product-slug-2';
+    $product = Product::factory()->published()->create(['slug' => $slug2])->refresh();
+    Comment::factory()->for($product)->count(3)->create();
+
+    $query = new ShowQuery();
+    $fetchedProduct1 = $query->builder($slug1)->first();
+    $fetchedProduct2 = $query->builder($slug2)->first();
+
+    expect($fetchedProduct1->comments_count)->toBe(0)
+        ->and($fetchedProduct2->comments_count)->toBe(3);
 });

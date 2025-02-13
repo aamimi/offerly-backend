@@ -184,6 +184,44 @@
                     }
                 }
             }
+        },
+        "/api/v1/products/{slug}/comments": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get product comments by slug",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Comment"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -304,6 +342,9 @@
                         "type": "string",
                         "nullable": true
                     },
+                    "has_comments": {
+                        "type": "boolean"
+                    },
                     "images": {
                         "type": "array",
                         "items": {
@@ -407,6 +448,39 @@
                     "mime_type": {
                         "type": "string",
                         "nullable": true
+                    }
+                }
+            },
+            "Comment": {
+                "type": "object",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "example": "johndoe"
+                            },
+                            "first_name": {
+                                "type": "string",
+                                "example": "John"
+                            },
+                            "last_name": {
+                                "type": "string",
+                                "example": "Doe"
+                            }
+                        }
                     }
                 }
             }

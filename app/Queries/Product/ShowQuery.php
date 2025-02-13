@@ -33,6 +33,6 @@ final readonly class ShowQuery
                     value: Config::string('app.media_collections.products.name')
                 )
                     ->orderBy(column: 'order_column'),
-            ]);
+            ])->withCount('comments');
     }
 }
