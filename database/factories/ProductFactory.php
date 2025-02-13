@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -27,6 +28,7 @@ final class ProductFactory extends Factory
             'discount_price' => $this->faker->optional()->randomFloat(2, 1, 1000),
             'rating' => $this->faker->numberBetween(-2000, 99999),
             'views' => $this->faker->numberBetween(0, 999999),
+            'category_id' => Category::factory(),
         ];
     }
 
