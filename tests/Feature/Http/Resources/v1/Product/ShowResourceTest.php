@@ -7,12 +7,14 @@ use App\Models\Category;
 use App\Models\Media;
 use App\Models\MetaTag;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 
 it('returns correct data structure', function (): void {
     // Arrange: Create a product
     $category = Category::factory()->create()->refresh();
     $product = Product::factory()->for($category)->create()->refresh();
+    ProductDetail::factory()->for($product)->create();
 
     // Act: Create a ShowResource instance and get the data
     $resource = new ShowResource($product);
@@ -21,7 +23,19 @@ it('returns correct data structure', function (): void {
 
     // Assert: Check if the data has the correct structure
     expect($data)->toHaveKeys(
-        ['slug', 'title', 'summary', 'description', 'price', 'discount_price', 'images', 'rating', 'created_at']
+        [
+            'slug',
+            'title',
+            'summary',
+            'description',
+            'conditions',
+            'instructions',
+            'price',
+            'discount_price',
+            'images',
+            'rating',
+            'created_at',
+        ]
     )->and($data['images'])->toBeArray()
         ->and($data['images'])->toHaveCount(0);
 });
@@ -30,6 +44,7 @@ it('returns correct data structure with images', function (): void {
     // Arrange: Create a product with images
     $category = Category::factory()->create()->refresh();
     $product = Product::factory()->for($category)->create()->refresh();
+    ProductDetail::factory()->for($product)->create();
     Media::factory()->for($product, 'model')->forProduct()->count(4)->create();
 
     // Act: Create a ShowResource instance and get the data
@@ -39,7 +54,19 @@ it('returns correct data structure with images', function (): void {
 
     // Assert: Check if the data has the correct structure
     expect($data)->toHaveKeys(
-        ['slug', 'title', 'summary', 'description', 'price', 'discount_price', 'images', 'rating', 'created_at']
+        [
+            'slug',
+            'title',
+            'summary',
+            'description',
+            'conditions',
+            'instructions',
+            'price',
+            'discount_price',
+            'images',
+            'rating',
+            'created_at',
+        ]
     )->and($data['images'])->toBeArray()
         ->and($data['images'])->toHaveCount(4)
         ->and($data['images'][0])->toHaveKeys(
@@ -53,6 +80,7 @@ it(
         // Arrange: Create a product with meta tags
         $category = Category::factory()->create()->refresh();
         $product = Product::factory()->for($category)->create($productAttributes)->refresh();
+        ProductDetail::factory()->for($product)->create();
         MetaTag::factory()->for($product, 'metaable')->create($metaData)->refresh();
 
         // Act: Create a ShowResource instance and get the additional data

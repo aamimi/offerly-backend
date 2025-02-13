@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\MetaTag;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
@@ -32,6 +33,7 @@ final class ProductSeeder extends Seeder
                 ]);
             try {
                 $products->each(function (Product $product): void {
+                    ProductDetail::factory()->for($product)->create();
                     for ($i = 0; $i < random_int(1, 4); ++$i) {
                         $product->addMedia(public_path('images/placeholderX400.jpg'))
                             ->preservingOriginal()

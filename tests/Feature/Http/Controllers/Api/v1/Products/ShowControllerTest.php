@@ -6,11 +6,13 @@ use App\Models\Category;
 use App\Models\Media;
 use App\Models\MetaTag;
 use App\Models\Product;
+use App\Models\ProductDetail;
 
 it('can show a product', function (bool $withMedia, bool $withMetaTag): void {
     // Arrange: Create a product
     $category = Category::factory()->create()->refresh();
     $product = Product::factory()->published()->for($category)->create()->refresh();
+    ProductDetail::factory()->for($product)->create();
     if ($withMedia) {
         Media::factory()->for($product, 'model')->forProduct()->count(4)->create();
     }
@@ -35,6 +37,8 @@ it('can show a product', function (bool $withMedia, bool $withMetaTag): void {
             'title',
             'summary',
             'description',
+            'conditions',
+            'instructions',
             'price',
             'discount_price',
             'rating',

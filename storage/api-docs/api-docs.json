@@ -296,6 +296,14 @@
                         "type": "string",
                         "nullable": true
                     },
+                    "conditions": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "instructions": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "images": {
                         "type": "array",
                         "items": {

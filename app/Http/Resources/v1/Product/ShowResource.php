@@ -25,12 +25,15 @@ final class ShowResource extends JsonResource
     public function toArray(Request $request): array
     {
         $mediaCollection = $this->getMedia(Config::string('app.media_collections.products.name'));
+        $productDetail = $this->details;
 
         return [
             'slug' => $this->slug,
             'title' => $this->title,
             'summary' => $this->summary,
-            'description' => $this->description,
+            'description' => $productDetail->description,
+            'conditions' => $productDetail->conditions,
+            'instructions' => $productDetail->instructions,
             'price' => $this->price,
             'discount_price' => $this->discount_price,
             'images' => ShowMediaResource::collection($mediaCollection)->toArray($request),

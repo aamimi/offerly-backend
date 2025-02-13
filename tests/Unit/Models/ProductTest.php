@@ -14,7 +14,6 @@ test('to array', function (): void {
         'slug',
         'title',
         'summary',
-        'description',
         'price',
         'discount_price',
         'rating',
@@ -48,4 +47,16 @@ it('has one meta tag', function (): void {
     ]);
     expect($product->metaTag)->toBeInstanceOf(App\Models\MetaTag::class)
         ->and($product->metaTag->is($metaTag))->toBeTrue();
+});
+
+it('has one product detail', function (): void {
+    $category = Category::factory()->create()->refresh();
+    $product = Product::factory()->for($category)->create()->refresh();
+    $productDetail = $product->details()->create([
+        'description' => 'Product Description',
+        'conditions' => 'Product Conditions',
+        'instructions' => 'Product Instructions',
+    ]);
+    expect($product->details)->toBeInstanceOf(App\Models\ProductDetail::class)
+        ->and($product->details->is($productDetail))->toBeTrue();
 });

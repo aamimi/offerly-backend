@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string(column: 'slug')->unique();
             $table->string(column: 'title')->index();
             $table->text(column: 'summary')->nullable()->index();
-            $table->text(column: 'description')->nullable();
             $table->decimal(column: 'price')->nullable();
             $table->decimal(column: 'discount_price')->nullable();
             $table->integer(column: 'rating')->default(value: 0);

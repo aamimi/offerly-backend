@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Category;
 use App\Models\Media;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use App\Queries\Product\ShowQuery;
 use Illuminate\Support\Facades\Config;
 
@@ -44,12 +45,21 @@ it('can get the product with the required columns', function (): void {
 
     $fetchedProduct = $query->builder($slug)->first();
     expect($fetchedProduct)->toHaveKeys(
-        ['id', 'slug', 'title', 'description', 'price', 'discount_price', 'rating', 'created_at']
+        [
+            'id',
+            'slug',
+            'title',
+            'summary',
+            'price',
+            'discount_price',
+            'rating',
+            'created_at',
+        ]
     )
         ->and($fetchedProduct->id)->toBe($product->id)
         ->and($fetchedProduct->slug)->toBe($product->slug)
         ->and($fetchedProduct->title)->toBe($product->title)
-        ->and($fetchedProduct->description)->toBe($product->description)
+        ->and($fetchedProduct->summary)->toBe($product->summary)
         ->and($fetchedProduct->price)->toBe($product->price)
         ->and($fetchedProduct->discount_price)->toBe($product->discount_price)
         ->and($fetchedProduct->rating)->toBe($product->rating)
@@ -66,7 +76,7 @@ function createMedia(Product $product, int $order, ?string $collection = null): 
     ]);
 }
 
-it('should return products with media having the correct collection name and lowest order column', function (): void {
+it('should return product with media having the correct collection name and lowest order column', function (): void {
     $slug = 'product-slug';
     $category = Category::factory()->create()->refresh();
     $product = Product::factory()->published()->for($category)->create(['slug' => $slug])->refresh();
@@ -82,4 +92,15 @@ it('should return products with media having the correct collection name and low
         ->and($fetchedProduct->media[0]->uuid)->toBe($media1->uuid)
         ->and($fetchedProduct->media[1]->uuid)->toBe($media2->uuid)
         ->and($fetchedProduct->media[2]->uuid)->toBe($media3->uuid);
+});
+
+it('should return product with product details', function (): void {
+    $slug = 'product-slug';
+    $category = Category::factory()->create()->refresh();
+    $product = Product::factory()->published()->for($category)->create(['slug' => $slug])->refresh();
+    $productDetails = ProductDetail::factory()->for($product)->create()->refresh();
+    $query = new ShowQuery();
+    $fetchedProduct = $query->builder($slug)->first();
+    expect($fetchedProduct->details)->is($productDetails)
+        ->and($fetchedProduct->details)->tohaveKeys(['id', 'product_id', 'description', 'instructions', 'conditions']);
 });

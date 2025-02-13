@@ -20,11 +20,12 @@ final readonly class ShowQuery
     {
         return Product::query()
             ->select(
-                ['id', 'slug', 'title', 'summary', 'description', 'price', 'discount_price', 'rating', 'created_at']
+                ['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating', 'created_at']
             )
             ->whereNotNull(columns: 'published_at')
             ->where(column: 'slug', operator: '=', value: $slug)
             ->with([
+                'details:id,product_id,description,conditions,instructions',
                 'metaTag',
                 'media' => fn (Relation $query) => $query->where(
                     column: 'collection_name',

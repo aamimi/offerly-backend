@@ -9,6 +9,7 @@ use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Facades\Config;
 use Spatie\MediaLibrary\HasMedia;
@@ -19,7 +20,6 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string $slug
  * @property string $title
  * @property string|null $summary
- * @property string|null $description
  * @property float|null $price
  * @property float|null $discount_price
  * @property int $rating
@@ -30,6 +30,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Carbon $updated_at
  * @property-read Category $category
  * @property-read MetaTag $metaTag
+ * @property-read ProductDetail $details
  */
 final class Product extends Model implements HasMedia
 {
@@ -50,6 +51,16 @@ final class Product extends Model implements HasMedia
                     'app.media_collections.products.maximum_number_of_items'
                 )
             );
+    }
+
+    /**
+     * Get the product detail.
+     *
+     * @return HasOne<ProductDetail, $this>
+     */
+    public function details(): HasOne
+    {
+        return $this->hasOne(ProductDetail::class);
     }
 
     /**
