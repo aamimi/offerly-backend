@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Config;
 
 it('can list products', function (): void {
     // Arrange: Create a product
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create()->refresh();
+    $product = Product::factory()->published()->create()->refresh();
 
     // Act: Send a GET request to the index endpoint
     $response = $this->getJson('/api/v1/products');
@@ -24,9 +23,7 @@ it('can list products', function (): void {
 
 it('returns the correct response structure for the list of products', function (): void {
     // Arrange: Create products
-    $product = Product::factory()->published()
-        ->for(Category::factory()->create())
-        ->create();
+    $product = Product::factory()->published()->create()->refresh();
     Media::factory()
         ->for($product, 'model')
         ->count(2)
@@ -65,7 +62,7 @@ it('returns the correct response structure for the list of products', function (
 
 it('return the correct total for the list of products', function (int $total): void {
     // Arrange: Create products
-    Product::factory()->published()->for(Category::factory()->create())->count($total)->create();
+    Product::factory()->published()->count($total)->create();
 
     // Act: Send a GET request to the index endpoint
     $response = $this->getJson('/api/v1/products');
@@ -99,9 +96,8 @@ it('can filter products by category', function (): void {
 
 it('can search products by title', function (): void {
     // Arrange: Create a product
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create(['title' => 'product x'])->refresh();
-    Product::factory()->published()->for($category)->create()->refresh();
+    $product = Product::factory()->published()->create(['title' => 'product x'])->refresh();
+    Product::factory()->published()->create();
 
     // Act: Send a GET request to the index endpoint with the search filter
     $response = $this->getJson('/api/v1/products?search='.$product->title);
@@ -117,9 +113,8 @@ it('can search products by title', function (): void {
 
 it('can search products by summary', function (): void {
     // Arrange: Create a product
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create(['summary' => 'summary product'])->refresh();
-    Product::factory()->published()->for($category)->create()->refresh();
+    $product = Product::factory()->published()->create(['summary' => 'summary product'])->refresh();
+    Product::factory()->published()->create();
 
     // Act: Send a GET request to the index endpoint with the search filter
     $response = $this->getJson('/api/v1/products?search='.$product->summary);

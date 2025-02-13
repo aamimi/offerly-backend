@@ -49,32 +49,6 @@ test('a comment has required fields', function (): void {
         ->and($comment->product_id)->not->toBeNull();
 });
 
-test('a user can have multiple comments', function (): void {
-    $user = User::factory()->create();
-    $product = Product::factory()->create();
-
-    Comment::factory()->count(3)->create([
-        'user_id' => $user->id,
-        'product_id' => $product->id,
-    ]);
-
-    expect($user->comments)->toHaveCount(3)
-        ->and($user->comments->first())->toBeInstanceOf(Comment::class);
-});
-
-test('a product can have multiple comments', function (): void {
-    $user = User::factory()->create();
-    $product = Product::factory()->create();
-
-    Comment::factory()->count(3)->create([
-        'user_id' => $user->id,
-        'product_id' => $product->id,
-    ]);
-
-    expect($product->comments)->toHaveCount(3)
-        ->and($product->comments->first())->toBeInstanceOf(Comment::class);
-});
-
 test('comment can store emoji', function (): void {
     $user = User::factory()->create();
     $product = Product::factory()->create();

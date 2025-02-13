@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Category;
 use App\Models\Media;
 use App\Models\Product;
 use App\Models\ProductDetail;
@@ -11,11 +10,8 @@ use Illuminate\Support\Facades\Config;
 
 it('can get the published product by slug', function (): void {
     $slug = 'product-slug';
+    $product = Product::factory()->published()->create(['slug' => $slug])->refresh();
     $query = new ShowQuery();
-
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create(['slug' => $slug])->refresh();
-
     expect($query->builder($slug)->first())->toBeInstanceOf(Product::class)
         ->and($query->builder($slug)->first()->id)->toBe($product->id);
 });
@@ -28,21 +24,16 @@ it('return null if product does not exist', function (): void {
 
 it('return null if product is not published', function (): void {
     $slug = 'product-slug';
+    Product::factory()->create(['slug' => $slug]);
     $query = new ShowQuery();
-
-    $category = Category::factory()->create()->refresh();
-    Product::factory()->for($category)->create(['slug' => $slug]);
-
     expect($query->builder($slug)->first())->toBeNull();
 });
 
 it('can get the product with the required columns', function (): void {
     $slug = 'product-slug';
+    $product = Product::factory()->published()->create(['slug' => $slug])->refresh();
+
     $query = new ShowQuery();
-
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create(['slug' => $slug])->refresh();
-
     $fetchedProduct = $query->builder($slug)->first();
     expect($fetchedProduct)->toHaveKeys(
         [
@@ -78,9 +69,7 @@ function createMedia(Product $product, int $order, ?string $collection = null): 
 
 it('should return product with media having the correct collection name and lowest order column', function (): void {
     $slug = 'product-slug';
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create(['slug' => $slug])->refresh();
-
+    $product = Product::factory()->published()->create(['slug' => $slug])->refresh();
     $media2 = createMedia($product, 2);
     $media1 = createMedia($product, 1);
     $media3 = createMedia($product, 3);
@@ -96,8 +85,7 @@ it('should return product with media having the correct collection name and lowe
 
 it('should return product with product details', function (): void {
     $slug = 'product-slug';
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create(['slug' => $slug])->refresh();
+    $product = Product::factory()->published()->create(['slug' => $slug])->refresh();
     $productDetails = ProductDetail::factory()->for($product)->create()->refresh();
     $query = new ShowQuery();
     $fetchedProduct = $query->builder($slug)->first();

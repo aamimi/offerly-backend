@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -15,12 +14,11 @@ test('can add image to product', function (): void {
     $mediaCollection = config('app.media_collections.products.name');
     $mediaDisk = config('app.media_collections.products.disk');
     // Arrange
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->for($category)->create()->refresh();
+    $product = Product::factory()->create()->refresh();
     $file = UploadedFile::fake()->image('test-image.jpg');
-    $product->addMedia($file)
-        ->toMediaCollection($mediaCollection);
+    $product->addMedia($file)->toMediaCollection($mediaCollection);
     $product->refresh();
+    // Assert
     expect($product->getMedia($mediaCollection))->toHaveCount(1)
         ->and($product->getFirstMedia($mediaCollection)->file_name)->toBe('test-image.jpg');
     $media = $product->getFirstMedia($mediaCollection);
@@ -31,8 +29,7 @@ test('can add multiple images to product', function (): void {
     $mediaCollection = config('app.media_collections.products.name');
     $mediaDisk = config('app.media_collections.products.disk');
     // Arrange
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->for($category)->create()->refresh();
+    $product = Product::factory()->create()->refresh();
     $files = [
         UploadedFile::fake()->image('image1.jpg'),
         UploadedFile::fake()->image('image2.jpg'),

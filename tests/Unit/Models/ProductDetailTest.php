@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductDetail;
 
 it('to array', function (): void {
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->for($category)->create()->refresh();
+    $product = Product::factory()->create()->refresh();
     $productDetail = ProductDetail::factory()->for($product)->create()->refresh();
     expect(array_keys($productDetail->toArray()))->toEqual([
         'id',
@@ -22,8 +20,7 @@ it('to array', function (): void {
 });
 
 it('belongs to product', function (): void {
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->for($category)->create()->refresh();
+    $product = Product::factory()->create()->refresh();
     $productDetail = ProductDetail::factory()->for($product)->create()->refresh();
     expect($productDetail->product)->toBeInstanceOf(Product::class)
         ->and($productDetail->product->is($product))->toBeTrue();

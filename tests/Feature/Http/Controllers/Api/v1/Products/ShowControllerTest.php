@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Category;
 use App\Models\Media;
 use App\Models\MetaTag;
 use App\Models\Product;
@@ -10,8 +9,7 @@ use App\Models\ProductDetail;
 
 it('can show a product', function (bool $withMedia, bool $withMetaTag): void {
     // Arrange: Create a product
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create()->refresh();
+    $product = Product::factory()->published()->create()->refresh();
     ProductDetail::factory()->for($product)->create();
     if ($withMedia) {
         Media::factory()->for($product, 'model')->forProduct()->count(4)->create();
@@ -85,8 +83,7 @@ it('return 404 if product does not exist', function (): void {
 
 it('return 404 if product is not published', function (): void {
     // Arrange: Create a product
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->for($category)->create()->refresh();
+    $product = Product::factory()->create()->refresh();
 
     // Act: Send a GET request to the show endpoint
     $response = $this->getJson('/api/v1/products/'.$product->slug);

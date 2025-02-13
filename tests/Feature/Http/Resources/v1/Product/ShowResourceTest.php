@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Resources\v1\Product\ShowResource;
-use App\Models\Category;
 use App\Models\Media;
 use App\Models\MetaTag;
 use App\Models\Product;
@@ -12,8 +11,7 @@ use Illuminate\Http\Request;
 
 it('returns correct data structure', function (): void {
     // Arrange: Create a product
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->for($category)->create()->refresh();
+    $product = Product::factory()->create()->refresh();
     ProductDetail::factory()->for($product)->create();
 
     // Act: Create a ShowResource instance and get the data
@@ -42,8 +40,7 @@ it('returns correct data structure', function (): void {
 
 it('returns correct data structure with images', function (): void {
     // Arrange: Create a product with images
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->for($category)->create()->refresh();
+    $product = Product::factory()->create()->refresh();
     ProductDetail::factory()->for($product)->create();
     Media::factory()->for($product, 'model')->forProduct()->count(4)->create();
 
@@ -78,8 +75,7 @@ it(
     'returns correct meta data with the resource',
     function (array $productAttributes, array $metaData, array $expectedMeta): void {
         // Arrange: Create a product with meta tags
-        $category = Category::factory()->create()->refresh();
-        $product = Product::factory()->for($category)->create($productAttributes)->refresh();
+        $product = Product::factory()->create($productAttributes)->refresh();
         ProductDetail::factory()->for($product)->create();
         MetaTag::factory()->for($product, 'metaable')->create($metaData)->refresh();
 

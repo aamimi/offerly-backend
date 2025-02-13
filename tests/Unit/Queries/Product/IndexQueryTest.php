@@ -17,8 +17,7 @@ it('should return the query builder with the correct columns', function (): void
 });
 
 it('should return correct number of products', function (int $nbProduct): void {
-    $category = Category::factory()->create()->refresh();
-    Product::factory()->published()->for($category)->count($nbProduct)->create();
+    Product::factory()->published()->count($nbProduct)->create();
     $query = new IndexQuery();
     $builder = $query->builder(new IndexFilter());
     $expectedCount = min($nbProduct, 10);
@@ -26,17 +25,15 @@ it('should return correct number of products', function (int $nbProduct): void {
 })->with([5, 10, 15]);
 
 it('should return only published products', function (): void {
-    $category = Category::factory()->create()->refresh();
-    Product::factory()->published()->for($category)->create();
-    Product::factory()->for($category)->create();
+    Product::factory()->published()->create();
+    Product::factory()->create();
     $query = new IndexQuery();
     $builder = $query->builder(new IndexFilter());
     expect($builder->get()->count())->toBe(1);
 });
 
 it('should return the correct number of products when skipping', function (): void {
-    $category = Category::factory()->create()->refresh();
-    Product::factory()->published()->for($category)->count(15)->create();
+    Product::factory()->published()->count(15)->create();
     $query = new IndexQuery();
     expect($query->builder(new IndexFilter(10, 10))->get()->count())->toBe(5)
         ->and($query->builder(new IndexFilter(20, 10))->get()->count())->toBe(0)
@@ -111,8 +108,7 @@ it(
 ]);
 
 it('should return products with media having the correct collection name and lowest order column', function (): void {
-    $category = Category::factory()->create()->refresh();
-    $product = Product::factory()->published()->for($category)->create();
+    $product = Product::factory()->published()->create();
     Media::factory()->for($product, 'model')->create([
         'collection_name' => Config::string('app.media_collections.products.name'),
         'order_column' => 2,
