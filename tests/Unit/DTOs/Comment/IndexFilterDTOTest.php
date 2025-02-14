@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Filters\Comment\IndexFilter;
+use App\DTOs\Comment\IndexFilterDTO;
 
 it('can be constructed', function (): void {
-    $filter = new IndexFilter('slug');
+    $filter = new IndexFilterDTO('slug');
 
     expect($filter->slug)->toBe('slug');
 });

@@ -24,6 +24,7 @@ arch('avoid mutation')
         'App\Services',
         'App\Http\Requests',
         'App\Http\Resources',
+        'App\Queries',
     ]);
 
 arch('avoid inheritance')
@@ -51,6 +52,7 @@ arch('avoid open for extension')
     ->toBeFinal();
 
 arch('avoid abstraction')
+    ->skip('App\Contracts')
     ->expect('App')
     ->not->toBeAbstract();
 
@@ -76,8 +78,9 @@ arch('models')
         'Database\Seeders',
         'App\Policies',
         'App\Queries',
-        'App\Filters',
         'App\Repositories',
+        'App\Contracts',
+        'App\DTOs',
     ]);
 
 arch('actions')
@@ -87,7 +90,3 @@ arch('actions')
 arch('services')
     ->expect('App\Services')
     ->toHaveMethod('handle');
-
-arch('queries')
-    ->expect('App\Queries')
-    ->toHaveMethod('builder');

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Queries\Comment;
 
-use App\Filters\Comment\IndexFilter;
+use App\DTOs\Comment\IndexFilterDTO;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -15,7 +15,7 @@ final readonly class IndexQuery
      *
      * @return Builder<Comment>
      */
-    public function builder(IndexFilter $filter): Builder
+    public function builder(IndexFilterDTO $filter): Builder
     {
         return Comment::query()
             ->select(['id', 'uuid', 'content', 'created_at', 'user_id', 'product_id'])

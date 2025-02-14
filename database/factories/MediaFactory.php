@@ -31,6 +31,7 @@ final class MediaFactory extends Factory
             'custom_properties' => json_encode([]),
             'generated_conversions' => json_encode([]),
             'responsive_images' => json_encode([]),
+            'order_column' => $this->faker->randomNumber(),
         ];
     }
 

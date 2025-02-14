@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repositories\Category;
 
+use App\Contracts\Repositories\CategoryRepositoryInterface;
 use App\Models\Category;
 
-final readonly class CategoryRepository
+final readonly class CategoryRepository implements CategoryRepositoryInterface
 {
     /**
      * Get the category and its subcategories ids.

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Filters\Product\IndexFilter;
+use App\DTOs\Product\IndexFilterDTO;
 
 it('can be constructed', function (): void {
-    $filter = new IndexFilter(skip: 5, limit: 10, search: 'test', categoriesIds: [1, 2, 3]);
+    $filter = new IndexFilterDTO(skip: 5, limit: 10, search: 'test', categoriesIds: [1, 2, 3]);
 
     expect($filter->skip)->toBe(5)
         ->and($filter->limit)->toBe(10)

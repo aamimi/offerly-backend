@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Contracts\Repositories\CategoryRepositoryInterface;
+use App\Contracts\Repositories\ProductRepositoryInterface;
+use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Product\ProductRepository;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -26,6 +30,9 @@ final class AppServiceProvider extends ServiceProvider
         }
 
         // @codeCoverageIgnoreEnd
+
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
     }
 
     /**

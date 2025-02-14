@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Filters\Comment;
+namespace App\DTOs\Comment;
 
-final readonly class IndexFilter
+final readonly class IndexFilterDTO
 {
     /**
      * IndexFilter constructor.
