@@ -13,9 +13,17 @@ use Illuminate\Support\Facades\Config;
 final readonly class ProductMediaRelation implements ProductQueryInterface
 {
     /**
+     * The maximum number of items to retrieve.
+     */
+    private int $limit;
+
+    /**
      * ProductMediaRelation constructor.
      */
-    public function __construct(private int $limit = 1) {}
+    public function __construct(?int $limit = null)
+    {
+        $this->limit = $limit ?? Config::integer('app.media_collections.products.maximum_number_of_items');
+    }
 
     /**
      * Apply the query to the given Eloquent query builder.

@@ -22,7 +22,7 @@ final class ProductQueryBuilder
      *
      * @var array<int, string>
      */
-    private array $columns = ['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating'];
+    private array $columns = ['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating', 'created_at'];
 
     /**
      * Add a filter to the query.

@@ -14,7 +14,7 @@ beforeEach(function (): void {
 it('has default select columns', function (): void {
     $query = $this->queryBuilder->build();
 
-    $expectedColumns = ['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating'];
+    $expectedColumns = ['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating', 'created_at'];
 
     expect($query->getQuery()->columns)
         ->toBeArray()

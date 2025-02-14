@@ -30,7 +30,8 @@ it('returns builder instance', function (): void {
 
 it('applies media relation with correct constraints', function (): void {
     // Arrange
-    $relation = new ProductMediaRelation();
+    $limit = 1;
+    $relation = new ProductMediaRelation($limit);
     Media::factory()->for($this->product, 'model')->create([
         'collection_name' => $this->mediaCollection,
         'order_column' => 2,
@@ -49,7 +50,7 @@ it('applies media relation with correct constraints', function (): void {
     $modifiedQuery = $relation->apply($query);
     $product = $modifiedQuery->first();
     expect($product->media->first()->uuid)->toBe($media->uuid)
-        ->and($product->media->count())->toBe(1);
+        ->and($product->media->count())->toBe($limit);
 });
 
 it('respects the custom limit parameter', function (): void {

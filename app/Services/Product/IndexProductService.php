@@ -38,6 +38,6 @@ final readonly class IndexProductService
             categoriesIds: $categoriesIds ?? null,
         );
 
-        return $this->productRepository->getProducts($indexFilter);
+        return $this->productRepository->getPublishedProducts($indexFilter);
     }
 }
