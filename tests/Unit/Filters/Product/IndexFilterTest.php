@@ -5,6 +5,15 @@ declare(strict_types=1);
 use App\Filters\Product\IndexFilter;
 use App\Models\Category;
 
+it('can be constructed', function (): void {
+    $filter = new IndexFilter(skip: 5, limit: 10, categorySlug: 'slug', search: 'test');
+
+    expect($filter->skip)->toBe(5)
+        ->and($filter->limit)->toBe(10)
+        ->and($filter->categorySlug)->toBe('slug')
+        ->and($filter->search)->toBe('test');
+});
+
 it('can get the category', function (): void {
     $slug = 'category-slug';
     $filter = new IndexFilter(categorySlug: $slug);

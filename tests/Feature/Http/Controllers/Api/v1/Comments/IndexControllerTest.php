@@ -26,12 +26,19 @@ test('can fetch comments for a product', function (): void {
                     ],
                 ],
             ],
+            'links' => [
+                'first',
+                'last',
+                'prev',
+                'next',
+            ],
+            'meta' => [
+                'current_page',
+                'from',
+                'path',
+                'per_page',
+                'to',
+            ],
         ])
         ->assertJsonCount(3, 'data');
-});
-
-test('returns 404 for non-existent product', function (): void {
-    $response = $this->getJson('/api/v1/products/non-existent-product/comments');
-
-    $response->assertStatus(404);
 });

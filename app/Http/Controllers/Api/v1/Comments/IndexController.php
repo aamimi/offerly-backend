@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\v1\Comments;
 
+use App\Filters\Comment\IndexFilter;
 use App\Http\Resources\v1\Comment\IndexCollection;
-use App\Models\Product;
+use App\Queries\Comment\IndexQuery;
 
 final readonly class IndexController
 {
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(private IndexQuery $query) {}
+
     /**
      * Display a listing of the product comments.
      */
     public function __invoke(string $slug): IndexCollection
     {
-        $product = Product::query()
-            ->whereNotNull('published_at')
-            ->where(column: 'slug', operator: '=', value: $slug)
-            ->firstOrFail();
+        $filter = new IndexFilter($slug);
 
-        $comments = $product->comments()
-            ->with('user:id,username,first_name,last_name')
-            ->latest()
-            ->get();
-
-        return new IndexCollection($comments);
+        return new IndexCollection($this->query->builder($filter)->simplePaginate(5));
     }
 }

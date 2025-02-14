@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\MetaTag;
 use App\Models\Product;
 use App\Models\ProductDetail;
@@ -24,16 +25,17 @@ final class ProductSeeder extends Seeder
     public function run(): void
     {
         Category::all()->each(function (Category $category): void {
-            $products = Product::factory()
-                ->count(10)
-                ->for($category)
-                ->has(MetaTag::factory()->count(1), 'metaTag')
-                ->create([
-                    'published_at' => random_int(0, 1) !== 0 ? now() : null,
-                ]);
             try {
+                $products = Product::factory()
+                    ->count(10)
+                    ->for($category)
+                    ->has(MetaTag::factory(), 'metaTag')
+                    ->has(ProductDetail::factory(), 'details')
+                    ->has(Comment::factory()->count(random_int(0, 10)), 'comments')
+                    ->create([
+                        'published_at' => random_int(0, 1) !== 0 ? now() : null,
+                    ]);
                 $products->each(function (Product $product): void {
-                    ProductDetail::factory()->for($product)->create();
                     for ($i = 0; $i < random_int(1, 4); ++$i) {
                         $product->addMedia(public_path('images/placeholderX400.jpg'))
                             ->preservingOriginal()
