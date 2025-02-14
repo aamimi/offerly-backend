@@ -52,7 +52,7 @@ it('handles empty string search term', function (): void {
 
     $query = $result->getQuery();
     $whereBindings = $query->bindings['where'];
-    expect($whereBindings)->toBe(['%%', '%%']);
+    expect($whereBindings)->toBeEmpty();
 });
 
 it('properly handles special characters', function (): void {

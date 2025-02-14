@@ -45,12 +45,8 @@ it('handles empty array of category ids', function (): void {
 
     $result = $filter->apply($this->query);
 
-    // Verify the whereIn clause was added with empty array
-    $whereClause = $result->getQuery()->wheres[0];
-    expect($whereClause)
-        ->toHaveKey('type', 'In')
-        ->toHaveKey('column', 'category_id')
-        ->and($whereClause['values'])->toBe([]);
+    // Verify no where clause was added
+    expect($result->getQuery()->wheres)->toBeEmpty();
 });
 
 it('returns instance of Builder', function (): void {

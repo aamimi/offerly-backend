@@ -90,5 +90,6 @@ it('return 404 if product is not published', function (): void {
     $response = $this->getJson('/api/v1/products/'.$product->slug);
 
     // Assert: Check if the response status is 404
-    $response->assertStatus(404);
+    $response->assertStatus(404)
+        ->assertJsonFragment(['message' => 'Product not found.']);
 });

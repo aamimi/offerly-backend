@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Contracts\Repositories\CategoryRepositoryInterface;
+use App\Contracts\Repositories\ProductRepositoryInterface;
+use App\Providers\AppServiceProvider;
+use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Product\ProductRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+it('binds interfaces to implementations', function (): void {
+    $this->app->register(AppServiceProvider::class);
+
+    $categoryRepository = $this->app->make(CategoryRepositoryInterface::class);
+    $productRepository = $this->app->make(ProductRepositoryInterface::class);
+
+    expect($categoryRepository)->toBeInstanceOf(CategoryRepository::class)
+        ->and($productRepository)->toBeInstanceOf(ProductRepository::class);
+});

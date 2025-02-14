@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\v1\Products;
 
 use App\Http\Resources\v1\Product\ShowResource;
+use App\Models\Product;
 use App\Services\Product\ShowProductService;
 use Illuminate\Http\JsonResponse;
 
@@ -21,7 +22,7 @@ final readonly class ShowController
     public function __invoke(string $slug): ShowResource|JsonResponse
     {
         $product = $this->productService->handle($slug);
-        if (! $product instanceof \App\Models\Product) {
+        if (! $product instanceof Product) {
             return new JsonResponse(['message' => 'Product not found.'], 404);
         }
 

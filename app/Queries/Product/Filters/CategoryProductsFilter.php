@@ -25,7 +25,7 @@ final readonly class CategoryProductsFilter implements ProductQueryInterface
      */
     public function apply(Builder $query): Builder
     {
-        if ($this->categoriesIds === null) {
+        if ($this->categoriesIds === null || $this->categoriesIds === []) {
             return $query;
         }
 

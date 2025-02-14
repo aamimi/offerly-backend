@@ -23,7 +23,7 @@ final readonly class SearchProductsFilter implements ProductQueryInterface
      */
     public function apply(Builder $query): Builder
     {
-        if ($this->searchTerm === null) {
+        if ($this->searchTerm === null || in_array(mb_trim($this->searchTerm), ['', '0'], true)) {
             return $query;
         }
 
