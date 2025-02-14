@@ -46,7 +46,7 @@ it('should return the products filtered by category parent', function (): void {
     Product::factory()->published()->for($category)->count(5)->create();
     Product::factory()->published()->for($category2)->count(5)->create();
     $query = new IndexQuery();
-    $builder = $query->builder(new IndexFilter(categorySlug: $category->slug));
+    $builder = $query->builder(new IndexFilter(categoriesIds: [$category->id]));
     expect($builder->get()->count())->toBe(5);
 });
 
@@ -56,7 +56,7 @@ it('should return products from the category and its subcategories', function ()
     Product::factory()->published()->for($category)->count(5)->create();
     Product::factory()->published()->for($subcategory)->count(5)->create();
     $query = new IndexQuery();
-    $builder = $query->builder(new IndexFilter(categorySlug: $category->slug));
+    $builder = $query->builder(new IndexFilter(categoriesIds: [$category->id, $subcategory->id]));
     expect($builder->get()->count())->toBe(10);
 });
 

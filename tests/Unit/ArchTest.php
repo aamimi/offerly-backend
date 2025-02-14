@@ -77,6 +77,7 @@ arch('models')
         'App\Policies',
         'App\Queries',
         'App\Filters',
+        'App\Repositories',
     ]);
 
 arch('actions')

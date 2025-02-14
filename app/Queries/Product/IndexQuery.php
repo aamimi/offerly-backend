@@ -34,8 +34,8 @@ final readonly class IndexQuery
                 }
             )
             ->when(
-                $filter->getCategoriesIds() !== null,
-                fn (Builder $query) => $query->whereIn('category_id', $filter->getCategoriesIds())
+                $filter->categoriesIds !== null,
+                fn (Builder $query) => $query->whereIn('category_id', $filter->categoriesIds)
             )
             ->with([
                 'media' => fn (Relation $query) => $query->where(
