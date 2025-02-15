@@ -41,6 +41,7 @@ arch('avoid inheritance')
         'App\Http\Resources',
         App\Queries\Product\ProductQueryBuilder::class,
         App\Queries\Comment\CommentQueryBuilder::class,
+        App\Queries\Category\CategoryQueryBuilder::class,
     ]);
 
 arch('annotations')

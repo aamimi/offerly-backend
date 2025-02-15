@@ -29,19 +29,25 @@ it('returns published products based on filter criteria', function (): void {
         total: 2
     );
 
-    $categoryRepository = mock(CategoryRepositoryInterface::class, function (MockInterface $mock) use ($categoriesIds): void {
-        $mock->shouldReceive('getCategoriesIdsBySlug')
-            ->once()
-            ->with('electronics')
-            ->andReturn($categoriesIds);
-    });
+    $categoryRepository = mock(
+        CategoryRepositoryInterface::class,
+        function (MockInterface $mock) use ($categoriesIds): void {
+            $mock->shouldReceive('getCategoriesIdsBySlug')
+                ->once()
+                ->with('electronics')
+                ->andReturn($categoriesIds);
+        }
+    );
 
-    $productRepository = mock(ProductRepositoryInterface::class, function (MockInterface $mock) use ($productsResponse): void {
-        $mock->shouldReceive('getPublishedProducts')
-            ->once()
-            ->with(Mockery::type(IndexFilterDTO::class))
-            ->andReturn($productsResponse);
-    });
+    $productRepository = mock(
+        ProductRepositoryInterface::class,
+        function (MockInterface $mock) use ($productsResponse): void {
+            $mock->shouldReceive('getPublishedProducts')
+                ->once()
+                ->with(Mockery::type(IndexFilterDTO::class))
+                ->andReturn($productsResponse);
+        }
+    );
 
     // Act: Create the service and call the handle method
     $service = new IndexProductService($productRepository, $categoryRepository);
@@ -70,12 +76,15 @@ it('returns published products without category filter', function (): void {
 
     $categoryRepository = mock(CategoryRepositoryInterface::class);
 
-    $productRepository = mock(ProductRepositoryInterface::class, function (MockInterface $mock) use ($productsResponse): void {
-        $mock->shouldReceive('getPublishedProducts')
-            ->once()
-            ->with(Mockery::type(IndexFilterDTO::class))
-            ->andReturn($productsResponse);
-    });
+    $productRepository = mock(
+        ProductRepositoryInterface::class,
+        function (MockInterface $mock) use ($productsResponse): void {
+            $mock->shouldReceive('getPublishedProducts')
+                ->once()
+                ->with(Mockery::type(IndexFilterDTO::class))
+                ->andReturn($productsResponse);
+        }
+    );
 
     // Act: Create the service and call the handle method
     $service = new IndexProductService($productRepository, $categoryRepository);

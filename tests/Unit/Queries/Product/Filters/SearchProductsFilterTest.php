@@ -94,6 +94,17 @@ it('returns instance of Builder', function (): void {
     expect($result)->toBeInstanceOf(Builder::class);
 });
 
+it('returns original query when search term is empty string or zero', function (): void {
+    $emptyFilter = new SearchProductsFilter('');
+    $zeroFilter = new SearchProductsFilter('0');
+
+    $emptyResult = $emptyFilter->apply($this->query);
+    $zeroResult = $zeroFilter->apply($this->query);
+
+    expect($emptyResult->getQuery()->wheres)->toBeEmpty()
+        ->and($zeroResult->getQuery()->wheres)->toBeEmpty();
+});
+
 // Integration test with database
 it('finds products by title or summary', function (): void {
     // Setup test data

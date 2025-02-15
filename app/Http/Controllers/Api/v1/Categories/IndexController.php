@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\v1\Categories;
 
 use App\Http\Resources\v1\Category\IndexCollection;
-use App\Queries\Category\IndexQuery;
+use App\Services\Category\IndexCategoryService;
 
 final readonly class IndexController
 {
     /**
-     * IndexController constructor
+     * Create a new controller instance.
      */
-    public function __construct(private IndexQuery $query) {}
+    public function __construct(private IndexCategoryService $service) {}
 
     /**
-     * Display a listing of the categories.
+     * Handle the incoming request.
      */
     public function __invoke(): IndexCollection
     {
-        return new IndexCollection($this->query->builder()->get());
+        return new IndexCollection($this->service->handle());
     }
 }

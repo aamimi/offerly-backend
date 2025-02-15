@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\v1\Categories;
 
 use App\Http\Resources\v1\Category\ShowResource;
-use App\Queries\Category\ShowQuery;
+use App\Services\Category\ShowCategoryService;
 
 final readonly class ShowController
 {
     /**
-     * ShowController constructor
+     * Create a new controller instance.
      */
-    public function __construct(private ShowQuery $query) {}
+    public function __construct(private ShowCategoryService $service) {}
 
     /**
-     * Display the specified category.
+     * Handle the incoming request.
      */
     public function __invoke(string $slug): ShowResource
     {
-        return new ShowResource($this->query->builder($slug)->firstOrFail());
+        return new ShowResource($this->service->handle($slug));
     }
 }
