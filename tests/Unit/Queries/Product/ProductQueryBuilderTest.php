@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Contracts\Queries\ProductQueryInterface;
+use App\Contracts\Queries\QueryFilterInterface;
 use App\Models\Product;
 use App\Queries\Product\ProductQueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,7 +40,7 @@ it('returns instance of query builder when setting columns', function (): void {
 });
 
 it('returns instance of query builder when adding filter', function (): void {
-    $mockFilter = Mockery::mock(ProductQueryInterface::class);
+    $mockFilter = Mockery::mock(QueryFilterInterface::class);
 
     $result = $this->queryBuilder->addFilter($mockFilter);
 
@@ -49,7 +49,7 @@ it('returns instance of query builder when adding filter', function (): void {
 
 it('applies filters to the query', function (): void {
     // Create a mock filter that adds a where clause
-    $mockFilter = Mockery::mock(ProductQueryInterface::class);
+    $mockFilter = Mockery::mock(QueryFilterInterface::class);
     $mockFilter->shouldReceive('apply')
         ->once()
         ->andReturnUsing(fn ($query) => $query->where('price', '>', 100));
@@ -67,12 +67,12 @@ it('applies filters to the query', function (): void {
 
 it('applies multiple filters in order', function (): void {
     // Create two mock filters
-    $mockFilter1 = Mockery::mock(ProductQueryInterface::class);
+    $mockFilter1 = Mockery::mock(QueryFilterInterface::class);
     $mockFilter1->shouldReceive('apply')
         ->once()
         ->andReturnUsing(fn ($query) => $query->where('price', '>', 100));
 
-    $mockFilter2 = Mockery::mock(ProductQueryInterface::class);
+    $mockFilter2 = Mockery::mock(QueryFilterInterface::class);
     $mockFilter2->shouldReceive('apply')
         ->once()
         ->andReturnUsing(fn ($query) => $query->where('rating', '>=', 4));

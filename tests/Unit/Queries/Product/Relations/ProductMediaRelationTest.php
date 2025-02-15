@@ -15,9 +15,9 @@ beforeEach(function (): void {
     Config::set('app.media_collections.products.name', $this->mediaCollection);
 });
 
-it('implements ProductQueryInterface', function (): void {
+it('implements QueryFilterInterface', function (): void {
     $relation = new ProductMediaRelation();
-    expect($relation)->toBeInstanceOf(App\Contracts\Queries\ProductQueryInterface::class);
+    expect($relation)->toBeInstanceOf(App\Contracts\Queries\QueryFilterInterface::class);
 });
 
 it('returns builder instance', function (): void {

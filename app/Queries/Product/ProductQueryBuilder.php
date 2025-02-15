@@ -4,61 +4,22 @@ declare(strict_types=1);
 
 namespace App\Queries\Product;
 
-use App\Contracts\Queries\ProductQueryInterface;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
+use App\Queries\AbstractQueryBuilder;
 
-final class ProductQueryBuilder
+/**
+ * @extends AbstractQueryBuilder<Product>
+ */
+final class ProductQueryBuilder extends AbstractQueryBuilder
 {
     /**
-     * The filters to be applied to the query.
-     *
-     * @var array<ProductQueryInterface>
+     * Create a new query builder instance.
      */
-    private array $filters = [];
-
-    /**
-     * The columns to be selected.
-     *
-     * @var array<int, string>
-     */
-    private array $columns = ['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating', 'created_at'];
-
-    /**
-     * Add a filter to the query.
-     */
-    public function addFilter(ProductQueryInterface $filter): self
+    public function __construct()
     {
-        $this->filters[] = $filter;
-
-        return $this;
-    }
-
-    /**
-     * Set the columns to be selected.
-     *
-     * @param  array<int, string>  $columns
-     */
-    public function setSelectColumns(array $columns): self
-    {
-        $this->columns = $columns;
-
-        return $this;
-    }
-
-    /**
-     * Build the query.
-     *
-     * @return Builder<Product>
-     */
-    public function build(): Builder
-    {
-        $query = Product::query()->select($this->columns);
-
-        foreach ($this->filters as $queryFilter) {
-            $query = $queryFilter->apply($query);
-        }
-
-        return $query;
+        parent::__construct(
+            modelClass: Product::class,
+            columns: ['id', 'slug', 'title', 'summary', 'price', 'discount_price', 'rating', 'created_at']
+        );
     }
 }

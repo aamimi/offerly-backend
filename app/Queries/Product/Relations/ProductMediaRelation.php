@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Queries\Product\Relations;
 
-use App\Contracts\Queries\ProductQueryInterface;
+use App\Contracts\Queries\QueryFilterInterface;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Config;
 
-final readonly class ProductMediaRelation implements ProductQueryInterface
+/**
+ * @implements QueryFilterInterface<Product>
+ */
+final readonly class ProductMediaRelation implements QueryFilterInterface
 {
     /**
      * The maximum number of items to retrieve.

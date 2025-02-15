@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Queries\Product\Relations;
 
-use App\Contracts\Queries\ProductQueryInterface;
+use App\Contracts\Queries\QueryFilterInterface;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 
-final readonly class ProductDetailsRelation implements ProductQueryInterface
+/**
+ * @implements QueryFilterInterface<Product>
+ */
+final readonly class ProductDetailsRelation implements QueryFilterInterface
 {
     /**
      * Apply the query to the given Eloquent query builder.

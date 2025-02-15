@@ -39,6 +39,8 @@ arch('avoid inheritance')
         'App\Services',
         'App\Http\Requests',
         'App\Http\Resources',
+        App\Queries\Product\ProductQueryBuilder::class,
+        App\Queries\Comment\CommentQueryBuilder::class,
     ]);
 
 arch('annotations')
@@ -49,12 +51,18 @@ arch('annotations')
 arch('avoid open for extension')
     ->expect('App')
     ->classes()
-    ->toBeFinal();
+    ->toBeFinal()
+    ->ignoring([
+        App\Queries\AbstractQueryBuilder::class,
+    ]);
 
 arch('avoid abstraction')
-    ->skip('App\Contracts')
     ->expect('App')
-    ->not->toBeAbstract();
+    ->not->toBeAbstract()
+    ->ignoring([
+        'App\Contracts',
+        App\Queries\AbstractQueryBuilder::class,
+    ]);
 
 arch('factories')
     ->expect('Database\Factories')

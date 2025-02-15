@@ -10,10 +10,10 @@ beforeEach(function (): void {
     $this->query = Product::query();
 });
 
-it('implements ProductQueryInterface', function (): void {
+it('implements QueryFilterInterface', function (): void {
     $filter = PublishedProductsFilter::class;
 
-    expect($filter)->toImplement(App\Contracts\Queries\ProductQueryInterface::class);
+    expect($filter)->toImplement(App\Contracts\Queries\QueryFilterInterface::class);
 });
 
 it('adds whereNotNull clause for published_at', function (): void {

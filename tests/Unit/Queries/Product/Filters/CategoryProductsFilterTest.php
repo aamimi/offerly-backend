@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Contracts\Queries\ProductQueryInterface;
+use App\Contracts\Queries\QueryFilterInterface;
 use App\Models\Product;
 use App\Queries\Product\Filters\CategoryProductsFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,10 +11,10 @@ beforeEach(function (): void {
     $this->query = Product::query();
 });
 
-it('implements ProductQueryInterface', function (): void {
+it('implements QueryFilterInterface', function (): void {
     $filter = CategoryProductsFilter::class;
 
-    expect($filter)->toImplement(ProductQueryInterface::class);
+    expect($filter)->toImplement(QueryFilterInterface::class);
 });
 
 it('returns original query when categories ids is null', function (): void {

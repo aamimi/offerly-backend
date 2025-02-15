@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Queries\Product\Filters;
 
-use App\Contracts\Queries\ProductQueryInterface;
+use App\Contracts\Queries\QueryFilterInterface;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 
-final readonly class SearchProductsFilter implements ProductQueryInterface
+/**
+ * @implements QueryFilterInterface<Product>
+ */
+final readonly class SearchProductsFilter implements QueryFilterInterface
 {
     /**
      * SearchProductsFilter constructor.
