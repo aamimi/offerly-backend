@@ -23,7 +23,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
      */
     public function getPublishedProducts(IndexFilterDTO $filter): ProductsResponseDTO
     {
-        $queryBuilder = (new ProductQueryBuilder())
+        $queryBuilder = new ProductQueryBuilder()
             ->addFilter(new PublishedProductsFilter())
             ->addFilter(new SearchProductsFilter($filter->search))
             ->addFilter(new CategoryProductsFilter($filter->categoriesIds))
@@ -42,7 +42,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
      */
     public function getPublishedProductBySlug(string $slug): ?Product
     {
-        return (new ProductQueryBuilder())
+        return new ProductQueryBuilder()
             ->addFilter(new SlugProductsFilter($slug))
             ->addFilter(new PublishedProductsFilter())
             ->addFilter(new ProductDetailsRelation())

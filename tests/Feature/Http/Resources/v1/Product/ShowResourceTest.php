@@ -33,7 +33,7 @@ it('returns correct data structure', function (): void {
             'images',
             'rating',
             'created_at',
-            'has_comments',
+            'comments_count',
         ]
     )->and($data['images'])->toBeArray()
         ->and($data['images'])->toHaveCount(0);
@@ -64,7 +64,7 @@ it('returns correct data structure with images', function (): void {
             'images',
             'rating',
             'created_at',
-            'has_comments',
+            'comments_count',
         ]
     )->and($data['images'])->toBeArray()
         ->and($data['images'])->toHaveCount(4)

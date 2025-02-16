@@ -21,7 +21,7 @@ final readonly class CommentRepository implements CommentRepositoryInterface
      */
     public function getCommentsOfProduct(IndexFilterDTO $filter): Paginator
     {
-        return (new CommentQueryBuilder())
+        return new CommentQueryBuilder()
             ->addFilter(new ProductCommentsFilter($filter->slug))
             ->addFilter(new CommentUserRelation())
             ->build()

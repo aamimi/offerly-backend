@@ -39,7 +39,7 @@ final class ShowResource extends JsonResource
             'images' => ShowMediaResource::collection($mediaCollection)->toArray($request),
             'rating' => $this->rating,
             'created_at' => $this->created_at->toDateTimeString(),
-            'has_comments' => $this->comments_count > 0,
+            'comments_count' => $this->comments_count,
         ];
     }
 
