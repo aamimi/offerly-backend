@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId(column: 'parent_id')->nullable()->constrained('categories');
             $table->string(column: 'slug', length: 100)->unique();
-            $table->string(column: 'name', length: 100);
+            $table->string(column: 'name', length: 100)->index();
             $table->string('image_url')->nullable();
-            $table->unsignedBigInteger('display_order')->default(0);
-            $table->unsignedBigInteger('views')->default(0);
+            $table->unsignedBigInteger('display_order')->default(0)->index();
+            $table->unsignedBigInteger('views')->default(0)->index();
             $table->dateTime(column: 'created_at')->useCurrent();
             $table->dateTime(column: 'updated_at')->useCurrent();
         });

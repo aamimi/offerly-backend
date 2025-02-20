@@ -27,4 +27,11 @@ interface CategoryRepositoryInterface
      * @return array<int>|null
      */
     public function getCategoriesIdsBySlug(string $slug): ?array;
+
+    /**
+     * Search categories by name.
+     *
+     * @return Collection<int, Category>
+     */
+    public function getCategoriesByName(?string $searchTerm, int $limit = 5): Collection;
 }

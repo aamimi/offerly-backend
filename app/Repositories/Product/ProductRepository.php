@@ -15,6 +15,7 @@ use App\Queries\Product\Filters\SlugProductsFilter;
 use App\Queries\Product\ProductQueryBuilder;
 use App\Queries\Product\Relations\ProductDetailsRelation;
 use App\Queries\Product\Relations\ProductMediaRelation;
+use Illuminate\Database\Eloquent\Collection;
 
 final readonly class ProductRepository implements ProductRepositoryInterface
 {
@@ -51,5 +52,27 @@ final readonly class ProductRepository implements ProductRepositoryInterface
             ->with('metaTag')
             ->withCount('comments')
             ->first();
+    }
+
+    /**
+     * Get published products by title.
+     *
+     * @return Collection<int, Product>
+     */
+    public function getPublishedProductsByTitle(?string $searchTerm, int $limit = 5): Collection
+    {
+        $queryBuilder = new ProductQueryBuilder()
+            ->setSelectColumns(['id', 'slug', 'title', 'price', 'discount_price', 'rating'])
+            ->addFilter(new PublishedProductsFilter())
+            ->addFilter(new ProductMediaRelation(limit: 1));
+
+        if ($searchTerm !== null) {
+            $queryBuilder->addFilter(new SearchProductsFilter($searchTerm));
+        }
+
+        return $queryBuilder->build()
+            ->orderBy(column: $searchTerm === null ? 'views' : 'title')
+            ->limit(value: $limit)
+            ->get();
     }
 }

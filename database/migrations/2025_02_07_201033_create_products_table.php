@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text(column: 'summary')->nullable()->index();
             $table->decimal(column: 'price')->nullable();
             $table->decimal(column: 'discount_price')->nullable();
-            $table->integer(column: 'rating')->default(value: 0);
-            $table->integer(column: 'views')->default(value: 0);
+            $table->integer(column: 'rating')->default(value: 0)->index();
+            $table->integer(column: 'views')->default(value: 0)->index();
             $table->foreignId(column: 'category_id')->index()->constrained('categories');
             $table->dateTime(column: 'published_at')->nullable()->index();
             $table->dateTime(column: 'created_at')->useCurrent();

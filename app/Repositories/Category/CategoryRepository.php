@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Queries\Category\CategoryQueryBuilder;
 use App\Queries\Category\Filters\CategoryBySlugFilter;
 use App\Queries\Category\Filters\ParentCategoriesFilter;
+use App\Queries\Category\Filters\SearchCategoriesFilter;
 use App\Queries\Category\Relations\CategoryAllSubcategoriesRelation;
 use App\Queries\Category\Relations\CategoryMetaTagRelation;
 use App\Queries\Category\Relations\CategorySubcategoriesRelation;
@@ -62,5 +63,24 @@ final readonly class CategoryRepository implements CategoryRepositoryInterface
         return $category instanceof Category // @phpstan-ignore-line
             ? [...$category->subcategories()->pluck('id')->toArray(), $category->id]
             : null;
+    }
+
+    /**
+     * Search categories by name.
+     *
+     * @return Collection<int, Category>
+     */
+    public function getCategoriesByName(?string $searchTerm, int $limit = 5): Collection
+    {
+        $queryBuilder = new CategoryQueryBuilder()->setSelectColumns(['slug', 'name']);
+        if ($searchTerm !== null) {
+            $queryBuilder->addFilter(new SearchCategoriesFilter($searchTerm));
+        }
+
+        return $queryBuilder
+            ->build()
+            ->orderBy(column: $searchTerm === null ? 'views' : 'name')
+            ->limit(value: $limit)
+            ->get();
     }
 }

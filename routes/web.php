@@ -7,10 +7,12 @@ use App\Http\Controllers\Api\v1\Categories\ShowController as ShowCategoryControl
 use App\Http\Controllers\Api\v1\Comments\IndexController as CommentsIndexController;
 use App\Http\Controllers\Api\v1\Products\IndexController as ProductsIndexController;
 use App\Http\Controllers\Api\v1\Products\ShowController as ShowProductController;
+use App\Http\Controllers\Api\v1\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function (): void {
     Route::prefix('v1')->group(function (): void {
+        Route::get('/search', SearchController::class)->name('api.v1.search');
         Route::prefix('/categories')->group(function (): void {
             Route::get('/', CategoriesIndexController::class)->name('api.v1.categories.index');
             Route::get('/{slug}', ShowCategoryController::class)->name('api.v1.categories.show');
