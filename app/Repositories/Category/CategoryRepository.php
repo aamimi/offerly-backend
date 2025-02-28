@@ -72,12 +72,9 @@ final readonly class CategoryRepository implements CategoryRepositoryInterface
      */
     public function getCategoriesByName(?string $searchTerm, int $limit = 5): Collection
     {
-        $queryBuilder = new CategoryQueryBuilder()->setSelectColumns(['slug', 'name']);
-        if ($searchTerm !== null) {
-            $queryBuilder->addFilter(new SearchCategoriesFilter($searchTerm));
-        }
-
-        return $queryBuilder
+        return new CategoryQueryBuilder()
+            ->setSelectColumns(['slug', 'name'])
+            ->addFilter(new SearchCategoriesFilter($searchTerm))
             ->build()
             ->orderBy(column: $searchTerm === null ? 'views' : 'name')
             ->limit(value: $limit)

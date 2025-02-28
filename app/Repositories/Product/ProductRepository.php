@@ -30,6 +30,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
             ->addFilter(new CategoryProductsFilter($filter->categoriesIds))
             ->addFilter(new ProductMediaRelation(limit: 1))
             ->build();
+
         $products = $queryBuilder
             ->skip($filter->skip)
             ->take($filter->limit)

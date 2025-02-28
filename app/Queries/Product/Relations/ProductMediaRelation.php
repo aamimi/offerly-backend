@@ -37,11 +37,14 @@ final readonly class ProductMediaRelation implements QueryFilterInterface
     public function apply(Builder $query): Builder
     {
         return $query->with([
-            'media' => fn (Relation $query) => $query->where(
-                column: 'collection_name',
-                operator: '=',
-                value: Config::string('app.media_collections.products.name')
-            )->orderBy(column: 'order_column')->limit(value: $this->limit),
+            'media' => fn (Relation $query) => $query
+                ->where(
+                    column: 'collection_name',
+                    operator: '=',
+                    value: Config::string('app.media_collections.products.name')
+                )
+                ->orderBy(column: 'order_column')
+                ->limit(value: $this->limit),
         ]);
     }
 }
